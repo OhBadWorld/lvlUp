@@ -1,5 +1,5 @@
 <template>
-  <div id="map" ref="map"></div>
+  <div id="map"></div>
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     loadMap() {
-      console.log(this.LMap)
+      // console.log(this.LMap)
       map = this.LMap.map('map',{
         center:[31.95789128, 120.64626101],
         zoom:11,
@@ -35,7 +35,7 @@ export default {
     }
   },
   mounted () {
-    this.loadMap();
+    // this.loadMap();
   }
 }
 </script>
@@ -43,7 +43,6 @@ export default {
 <style scoped>
 #map{
   width: 100%;
-  height: 800px;
-  border: 1px solid red;
+  height: calc(100vh);
 }
 </style>

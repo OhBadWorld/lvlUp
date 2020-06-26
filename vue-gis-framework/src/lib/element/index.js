@@ -1,11 +1,16 @@
 import 'element-ui/lib/theme-chalk/index.css';
-import { Button, Select, Option, OptionGroup } from 'element-ui';
+import { Button, Select, Option, OptionGroup, Loading, Icon, Dropdown, DropdownMenu, DropdownItem } from 'element-ui';
 
 export default Vue => {
   Vue.component(Button.name, Button),
   Vue.component(Select.name, Select),
   Vue.component(Option.name, Option),
-  Vue.component(OptionGroup.name, OptionGroup)
+  Vue.component(OptionGroup.name, OptionGroup),
+  Vue.component(Icon.name, Icon),
+  Vue.component(Dropdown.name, Dropdown),
+  Vue.component(DropdownMenu.name, DropdownMenu),
+  Vue.component(DropdownItem.name, DropdownItem),
+  Vue.prototype.$loading = Loading.service
   /*
    * 或写为
    * Vue.use(Button)
