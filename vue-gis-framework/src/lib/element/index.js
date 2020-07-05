@@ -1,5 +1,9 @@
 import 'element-ui/lib/theme-chalk/index.css';
-import { Button, Select, Option, OptionGroup, Loading, Icon, Dropdown, DropdownMenu, DropdownItem } from 'element-ui';
+import {
+  Button, Select, Option, OptionGroup, Loading, Icon,
+  Dropdown, DropdownMenu, DropdownItem, Input, Tree,
+  Row, Col, Message
+} from 'element-ui';
 
 export default Vue => {
   Vue.component(Button.name, Button),
@@ -10,7 +14,12 @@ export default Vue => {
   Vue.component(Dropdown.name, Dropdown),
   Vue.component(DropdownMenu.name, DropdownMenu),
   Vue.component(DropdownItem.name, DropdownItem),
-  Vue.prototype.$loading = Loading.service
+  Vue.component(Input.name, Input),
+  Vue.component(Tree.name, Tree),
+  Vue.component(Row.name, Row),
+  Vue.component(Col.name, Col),
+  Vue.prototype.$loading = Loading.service,
+  Vue.prototype.$Message = Message
   /*
    * 或写为
    * Vue.use(Button)

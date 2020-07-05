@@ -176,6 +176,10 @@ export default {
     this.$nextTick(() => {
       this.loadingScreen().close();
       this.loadBaseMap();
+      // this.$Message({
+      //   showClose: true,
+      //     message: '这是一条消息提示'
+      // });
     });
   }
 

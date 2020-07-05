@@ -1,0 +1,217 @@
+{
+  "IsSuccess": "True",
+  "Data": [
+      {
+        "id": "bf4b76a2-8d6d-4b83-8e85-141e554a29a2",
+        "pId": "0",
+        "name": "站点归属",
+        "IsPoint": "0",
+        "pState": "0",
+        "X": "--",
+        "Y": "--",
+        "children": [
+          {
+            "id": "8AAA4D6A-6882-46D5-A39A-C283A8CA58B8",
+            "pId": "bf4b76a2-8d6d-4b83-8e85-141e554a29a2",
+            "name": "国控",
+            "IsPoint": "0",
+            "pState": "0",
+            "X": "--",
+            "Y": "--",
+            "children": []
+          },
+          {
+            "id": "A92F6729-6C4A-4142-927A-06E4187FEA90",
+            "pId": "bf4b76a2-8d6d-4b83-8e85-141e554a29a2",
+            "name": "省控",
+            "IsPoint": "0",
+            "pState": "0",
+            "X": "--",
+            "Y": "--",
+            "children": []
+          },
+          {
+            "id": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
+            "pId": "bf4b76a2-8d6d-4b83-8e85-141e554a29a2",
+            "name": "市控",
+            "IsPoint": "0",
+            "pState": "0",
+            "X": "--",
+            "Y": "--",
+            "children": [
+              {
+                "id": "40",
+                "pId": "18030A1B-936B-41D9-BCFC-4BF1E759869C",
+                "name": "锦丰",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.64626101",
+                "Y": "31.95789128",
+                "waterQuality": "I"
+              },
+              {
+                "id": "30",
+                "pId": "1C2CE094-91E0-458F-AA71-A9C246848420",
+                "name": "新监测站",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.56934479",
+                "Y": "31.85618831",
+                "waterQuality": "I"
+              },
+              {
+                "id": "31",
+                "pId": "1C2CE094-91E0-458F-AA71-A9C246848420",
+                "name": "监测站",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.53118860",
+                "Y": "31.86526444",
+                "waterQuality": "I"
+              },
+              {
+                "id": "34",
+                "pId": "1C2CE094-91E0-458F-AA71-A9C246848420",
+                "name": "沙洲湖",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.56709498",
+                "Y": "31.90134260",
+                "waterQuality": "II"
+              },
+              {
+                "id": "39",
+                "pId": "1C2CE094-91E0-458F-AA71-A9C246848420",
+                "name": "城北小学",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.55362585",
+                "Y": "31.87984724",
+                "waterQuality": "I"
+              },
+              {
+                "id": "43",
+                "pId": "1C2CE094-91E0-458F-AA71-A9C246848420",
+                "name": "移动监测车",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "0.00000000",
+                "Y": "0.00000000",
+                "waterQuality": "I"
+              },
+              {
+                "id": "35",
+                "pId": "57A828FD-2B95-448B-BC9A-8011BE32534B",
+                "name": "南丰",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.67973971",
+                "Y": "31.87697911",
+                "waterQuality": "I"
+              },
+              {
+                "id": "29",
+                "pId": "5D303A91-9787-4AE8-BD5F-F68DB95B0CDB",
+                "name": "凤凰",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.594177",
+                "Y": "31.767289",
+                "waterQuality": "Deaflet"
+              },
+              {
+                "id": "38",
+                "pId": "6DFD7DCD-27CD-4D59-B03A-CDE27D52B250",
+                "name": "大新",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.54830896",
+                "Y": "31.97094306",
+                "waterQuality": "I"
+              },
+              {
+                "id": "26",
+                "pId": "7218A6F1-AA88-4BA3-98E4-8203EF6CA6BC",
+                "name": "双山岛",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.40354772",
+                "Y": "31.97611551",
+                "waterQuality": "I"
+              },
+              {
+                "id": "27",
+                "pId": "7218A6F1-AA88-4BA3-98E4-8203EF6CA6BC",
+                "name": "江南锅炉",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.50251082",
+                "Y": "31.95963070",
+                "waterQuality": "I"
+              },
+              {
+                "id": "28",
+                "pId": "7218A6F1-AA88-4BA3-98E4-8203EF6CA6BC",
+                "name": "保税区",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.44927288",
+                "Y": "31.95719416",
+                "waterQuality": "I"
+              },
+              {
+                "id": "36",
+                "pId": "7218A6F1-AA88-4BA3-98E4-8203EF6CA6BC",
+                "name": "康宁化学",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.47244152",
+                "Y": "32.00095381",
+                "waterQuality": "III"
+              },
+              {
+                "id": "41",
+                "pId": "8AAA4D6A-6882-46D5-A39A-C283A8CA58B8",
+                "name": "乐余",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.70108086",
+                "Y": "31.92602437",
+                "waterQuality": "I"
+              },
+              {
+                "id": "42",
+                "pId": "8AAA4D6A-6882-46D5-A39A-C283A8CA58B8",
+                "name": "东沙",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.78479800",
+                "Y": "31.83174122",
+                "waterQuality": "II"
+              },
+              {
+                "id": "32",
+                "pId": "A92F6729-6C4A-4142-927A-06E4187FEA90",
+                "name": "现代农业示范园",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.77730400",
+                "Y": "31.87554486",
+                "waterQuality": "I"
+              },
+              {
+                "id": "33",
+                "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
+                "name": "塘桥",
+                "IsPoint": "0",
+                "pState": "0",
+                "X": "120.64110339",
+                "Y": "31.82378114",
+                "waterQuality": "I"
+              }
+            ]
+        }
+      ]
+    }
+  ]
+}
