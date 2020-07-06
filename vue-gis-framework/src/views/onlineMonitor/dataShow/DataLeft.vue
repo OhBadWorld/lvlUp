@@ -138,11 +138,9 @@ export default {
   },
   methods: {
     loadTreeData() {
-      this.$axios.get('/mock/treeData.json').then((res) => {
+      this.$apiMethods.getTestData().then((res) => {
         console.log(res);
       });
-      // const treeData = this.$axios.getTreeData;
-      // console.log(treeData);
     },
     handleToQuery() {},
     // 树过滤方法

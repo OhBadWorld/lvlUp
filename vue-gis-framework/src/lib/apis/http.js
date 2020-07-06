@@ -1,61 +1,58 @@
-import axios from "axios"; // 引入axios
-import qs from "qs"; // 这个是axios里面的模块，用于序列化参数的。 看情况使用哦
-import { getToken } from "./auth"   //获取到token
+import axios from "axios";
 
-//创建一个axios实例
-const service = axios.create({
-   baseURL: process.env.VUE_APP_URL,
-   timeout:5000,
-   //transformRequest 这里主要是 post请求时 请求成功了，但是后台并没 
-   //有获取到前端的请求参数。如果后台是直接从请求体里取的话，请忽略
-   transformRequest:[
-       data => {
-           let params = qs.stringify(data, {indices: false})
-           return params 
-       }        
-   ]   
-})
+// 创建 axios 实例
+const requests = axios.create({
+  // baseURL: process.env.VUE_APP_API, // 基础url,如果是多环境配置这样写，也可以像下面一行的写死。
+  // baseURL: 'http://168.192.0.123',
+  // 如果设置了代理，那你本地开发环境的axios的baseUrl要写为''，即空字符串
+  baseURL: '',
+  timeout: 6000 // 请求超时时间
+});
 
-let token = getToken(); //获取token
+// request interceptor(请求拦截器)
+requests.interceptors.request.use((config) => {
+    //   const token = localStorage.getItem('token');
+    //   if (token) {
+    //     config.headers['token'] = token; // 让每个请求携带自定义 token 请根据实际情况自行修改
+    //   }
+  return config;
+}, err);
 
-// 请求拦截器
-service.interceptors.request.use(
-    config => {
-        if(token){
-            //每次请求都需要带上token去请求接口
-            config.headers['token'] = getToken()
-        }
-        return config
-    },
-    error => {
-       return Promise.reject(error)
+// response interceptor（接收响应拦截器）
+requests.interceptors.response.use((response) => {
+  // debugger
+  const res = response.data;
+  if (res.code !== 0 && res.code!==200) { 
+    // Notify({ type: 'danger', message: res.message||res.msg });
+    // 401:未登录;
+    if (res.code === 401 || res.code === 403) {
+      // Notify({ type: 'danger', message: '请登录'});
     }
-)
+    return Promise.reject('error');
+  } else {
+    return res;
+  }
+}, err);
 
-//响应拦截器
-service.interceptors.response.use(
-    response => {
-        const res = response.data
-        if(res.code != 200){
-            //这里主要是判断code值 等于什么，代表着token值失效 例如：50008
-            if(res.code == 50008){
-               MessageBox.confirm("token值失效，请重新登录",{
-                  confirmButtonText: "返回登录页",
-                  cancelButtonText: "取消",
-                  type: "warning"
-               }).then(() => {
-                //退回到登录页 需要将sessionStorage里面的值给清空掉
-                sessionStorage.clear() 
-               })
-           }
-          return res
-        }else{
-          return res
-        }
-    },
-    error => {
-       return Promise.reject(error)
-   }
-)
+// 错误处理函数
+const err = (error) => {
+  if (error.response) {
+      const data = error.response.data;
+      if (error.response.status === 403) {
+      //    Notify({ type: 'danger', message: data.message||data.msg });
+      }
+      if (error.response.status === 401) {
+      //    Notify({ type: 'danger', message: '你没有权限。' });
+      // if (token) {
+      //   store.dispatch('Logout').then(() => {
+      //     setTimeout(() => {
+      //       window.location.reload()
+      //     }, 1500)
+      //   })
+      // }
+      }
+  }
+  return Promise.reject(error);
+}
 
-export default service
+export default requests;
