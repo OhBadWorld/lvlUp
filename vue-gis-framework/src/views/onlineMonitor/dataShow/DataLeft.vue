@@ -36,11 +36,12 @@
     </el-row>
     <div style="height:317px;overflow:auto;width:100%;">
       <el-tree
+        :props="treeProps"
         :data="treeList"
         show-checkbox
-        node-key="id"
+        default-expand-all
         ref="onlineTree"
-        :default-expand-all="true"
+        node-key="id"
         :default-checked-keys="checkedKeys"
         :filter-node-method="filterNode"
         @check="handleCheckChange"
@@ -70,64 +71,68 @@ export default {
         { id:'002', label: '站点归属', type: 'zdgs' },
       ],
       queryname: '',
+      treeProps: {
+        label: 'name',
+        children: 'children',
+      },
       treeList: [
         {
           portId: 1,
-          label: '标准空气站',
+          name: '标准空气站',
           children: [
             {
               id: 11,
-              label: '标准空气站A',
+              name: '标准空气站A',
             },
           ],
         },
         {
           portId: 2,
-          label: 'VOC空气站',
+          name: 'VOC空气站',
           children: [
             {
               id: 21,
-              label: 'VOC空气站A',
+              name: 'VOC空气站A',
             },
           ],
         },
         {
           portId: 3,
-          label: '网格化',
+          name: '网格化',
           children: [
             {
               id: 31,
-              label: '泵站名称2',
+              name: '泵站名称2',
             },
           ],
         },
         {
           id: 4,
-          label: '敏感点',
+          name: '敏感点',
           children: [
             {
               id: 41,
-              label: '敏感点A',
+              name: '敏感点A',
             },
           ],
         },
         {
           id: 5,
-          label: '厂界站',
+          name: '厂界站',
           children: [
             {
               id: 51,
-              label: '厂界站A',
+              name: '厂界站A',
             },
           ],
         },
         {
           id: 6,
-          label: '废气站点',
+          name: '废气站点',
           children: [
             {
               id: 61,
-              label: '废气排口1',
+              name: '废气排口1',
             },
           ],
         },
@@ -138,15 +143,32 @@ export default {
   },
   methods: {
     loadTreeData() {
+      this.treeList = [];
+      this.checkedKeys = [];
       this.$apiMethods.getTestData().then((res) => {
-        console.log(res);
+        if (res.code === 200) {
+          this.treeList = res.data;
+          // 设置全选
+          this.checkedKeys.push(this.treeList[0].id);
+        }
+        // console.log(res);
       });
     },
     handleToQuery() {},
     // 树过滤方法
     filterNode(value, data) {},
-    // 树 check选中事件
-    handleCheckChange() {},
+    // 树 多选框点击事件
+    handleCheckChange(curObj, treeCheckedObj) {
+      console.log(curObj,treeCheckedObj);
+      if (curObj.children.length === 0) {
+        this.$Message({
+          showClose: true,
+          duration: 1000,
+          message: '当前节点下暂无点位'
+        });
+        return;
+      }
+    },
     // 树点击定位事件
     Location() {},
   },
@@ -196,6 +218,24 @@ export default {
   height: 30px;
   width: 146px;
 }
+/* ******滚动条样式******************* */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
 
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,.3);
+  background-color: #FFFFFF;
+}
+
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,.3);
+  background-color: #CCCCCC;
+}
 
 </style>
