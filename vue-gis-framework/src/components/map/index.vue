@@ -32,6 +32,13 @@ export default {
           attribution: "谷歌"
         }
       ).addTo(map);
+
+      this.loadPoints();
+    },
+    loadPoints() {
+      this.LMap.marker([31.85618831, 120.56934479]).addTo(map)
+      .bindPopup('666')
+      .openPopup();
     }
   },
   mounted () {

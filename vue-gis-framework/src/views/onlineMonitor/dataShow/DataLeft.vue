@@ -138,6 +138,7 @@ export default {
         },
       ],
       checkedKeys: [], // 默认选中的节点
+      allPoints: [], // 获取所有点位集合
 
     }
   },
@@ -145,15 +146,60 @@ export default {
     loadTreeData() {
       this.treeList = [];
       this.checkedKeys = [];
+      this.allPoints = [];
       this.$apiMethods.getTestData().then((res) => {
         if (res.code === 200) {
           this.treeList = res.data;
           // 设置全选
           this.checkedKeys.push(this.treeList[0].id);
+          // 加载出所有点位信息
+          this.allPoints = this.getAllPoints(res.data);
+          console.log(this.allPoints);
         }
         // console.log(res);
       });
     },
+    // 递归循环出树节点
+    getAllPoints(data) {
+      // debugger
+      // 1.递归截止条件
+      if (data.length == 0) return this.allPoints;
+      // 2.递归方法
+      if (data.length > 0) {
+      data.forEach(element => {
+        if (element.children && element.children.length >= 0) {
+          this.getAllPoints(element.children);
+        } else {
+          this.allPoints.push(element);
+        } 
+      });
+      }
+      // 3.返回结果
+      return this.allPoints
+    },
+    // ================================================================================================================= 也可以把递归写在方法里面 start
+    // getAllPoints(data) {
+    //   // debugger
+    //   let allPoints = [];
+    //   // 1.前期跳出条件
+    //   if (data.length == 0) return allPoints;
+    //   // 1.递归方法
+    //   function querypoints(data) {
+    //     if (data.length > 0) {
+    //     data.forEach(element => {
+    //       if (element.children && element.children.length >= 0) {
+    //         querypoints(element.children);
+    //       } else {
+    //         allPoints.push(element);
+    //       } 
+    //     });
+    //     }
+    //   }
+    //   // 2.调用递归方法，满足条件继续调用递归，不满足就接着往下走
+    //   querypoints(data);
+    //   return allPoints;
+    // },
+    // ================================================================================================================= 也可以把递归写在方法里面 end
     handleToQuery() {},
     // 树过滤方法
     filterNode(value, data) {},
