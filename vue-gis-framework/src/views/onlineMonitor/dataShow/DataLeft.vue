@@ -154,9 +154,9 @@ export default {
           this.checkedKeys.push(this.treeList[0].id);
           // 加载出所有点位信息
           this.allPoints = this.getAllPoints(res.data);
-          console.log(this.allPoints);
+          // console.log(this.allPoints);
+          this.$emit('loadAllPoints', this.allPoints)
         }
-        // console.log(res);
       });
     },
     // 递归循环出树节点
@@ -206,7 +206,7 @@ export default {
     // 树 多选框点击事件
     handleCheckChange(curObj, treeCheckedObj) {
       console.log(curObj,treeCheckedObj);
-      if (curObj.children.length === 0) {
+      if (curObj.children && curObj.children.length === 0) {
         this.$Message({
           showClose: true,
           duration: 1000,
@@ -214,9 +214,12 @@ export default {
         });
         return;
       }
+      console.log(this.$refs.onlineTree.getCheckedKeys());
     },
     // 树点击定位事件
-    Location() {},
+    Location() {
+      alert(666)
+    },
   },
   mounted() {
     this.loadTreeData();

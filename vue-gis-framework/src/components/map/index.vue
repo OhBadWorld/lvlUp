@@ -12,6 +12,8 @@ var mapurl='http://mt3.google.cn/vt/lyrs=m@207000000&hl=zh-CN&gl=CN&src=app&s=Ga
 export default {
   data () {
     return {
+      markLayer: undefined,
+      allPoints: [],
     }
   },
   methods: {
@@ -33,12 +35,31 @@ export default {
         }
       ).addTo(map);
 
-      this.loadPoints();
     },
-    loadPoints() {
-      this.LMap.marker([31.85618831, 120.56934479]).addTo(map)
-      .bindPopup('666')
-      .openPopup();
+    loadPoints(points) {
+      this.allPoints = points;
+      this.clearPoints();
+      let markGroup = [];
+      if (this.allPoints && this.allPoints.length > 0) {
+        for (let i = 0; i < this.allPoints.length; i++) {
+          const Y = this.allPoints[i].Y;
+          const X = this.allPoints[i].X;
+          let singleMark = new this.LMap.marker([ Y, X ]);
+          markGroup.push(singleMark);
+        }
+        this.markLayer = this.LMap.layerGroup(markGroup);
+        map.addLayer(this.markLayer);
+      }
+      console.log(points);
+      // this.LMap.marker([31.85618831, 120.56934479]).addTo(map)
+      // .bindPopup('666')
+      // .openPopup();
+    },
+    clearPoints() {
+      if (this.markLayer !== undefined) {
+        this.markLayer.clearLayers();
+        map.removeLayer(this.markLayer);
+      }
     }
   },
   mounted () {
