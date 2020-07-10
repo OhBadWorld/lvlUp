@@ -47,7 +47,7 @@
                 "pState": "0",
                 "X": "120.64626101",
                 "Y": "31.95789128",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "30",
@@ -57,7 +57,7 @@
                 "pState": "0",
                 "X": "120.56934479",
                 "Y": "31.85618831",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "31",
@@ -67,7 +67,7 @@
                 "pState": "0",
                 "X": "120.53118860",
                 "Y": "31.86526444",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "34",
@@ -77,7 +77,7 @@
                 "pState": "0",
                 "X": "120.56709498",
                 "Y": "31.90134260",
-                "waterQuality": "II"
+                "airQuality": "II"
               },
               {
                 "id": "39",
@@ -87,7 +87,7 @@
                 "pState": "0",
                 "X": "120.55362585",
                 "Y": "31.87984724",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "35",
@@ -97,7 +97,7 @@
                 "pState": "0",
                 "X": "120.67973971",
                 "Y": "31.87697911",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "29",
@@ -107,7 +107,7 @@
                 "pState": "0",
                 "X": "120.594177",
                 "Y": "31.767289",
-                "waterQuality": "Deaflet"
+                "airQuality": "Deaflet"
               },
               {
                 "id": "38",
@@ -117,7 +117,7 @@
                 "pState": "0",
                 "X": "120.54830896",
                 "Y": "31.97094306",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "26",
@@ -127,7 +127,7 @@
                 "pState": "0",
                 "X": "120.40354772",
                 "Y": "31.97611551",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "27",
@@ -137,7 +137,7 @@
                 "pState": "0",
                 "X": "120.50251082",
                 "Y": "31.95963070",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "28",
@@ -147,7 +147,7 @@
                 "pState": "0",
                 "X": "120.44927288",
                 "Y": "31.95719416",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "36",
@@ -157,7 +157,7 @@
                 "pState": "0",
                 "X": "120.47244152",
                 "Y": "32.00095381",
-                "waterQuality": "III"
+                "airQuality": "III"
               },
               {
                 "id": "41",
@@ -167,7 +167,7 @@
                 "pState": "0",
                 "X": "120.70108086",
                 "Y": "31.92602437",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "42",
@@ -177,7 +177,7 @@
                 "pState": "0",
                 "X": "120.78479800",
                 "Y": "31.83174122",
-                "waterQuality": "II"
+                "airQuality": "II"
               },
               {
                 "id": "32",
@@ -187,7 +187,7 @@
                 "pState": "0",
                 "X": "120.77730400",
                 "Y": "31.87554486",
-                "waterQuality": "I"
+                "airQuality": "I"
               },
               {
                 "id": "33",
@@ -197,7 +197,7 @@
                 "pState": "0",
                 "X": "120.64110339",
                 "Y": "31.82378114",
-                "waterQuality": "I"
+                "airQuality": "I"
               }
             ]
         }
