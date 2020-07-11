@@ -158,6 +158,12 @@ export default {
           this.$emit('loadAllPoints', this.allPoints)
         }
       });
+
+      this.$apiMethods.getGasPointsData().then((res) => {
+        if (res.code === 200) {
+          console.log(res);
+        }
+      });
     },
     // 递归循环出树节点
     getAllPoints(data) {

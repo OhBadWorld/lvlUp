@@ -8,6 +8,12 @@ const apiMethods = {
       method: "get"
     })
   },
+  getGasPointsData() {
+    return requests({
+      url: "/mock/gasPointsData.json",
+      method: "get"
+    })
+  },
 };
 
 export function getTestData() {
