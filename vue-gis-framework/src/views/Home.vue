@@ -32,7 +32,7 @@
         <div v-show="leftContainerShow" class="zIndex leftPanelWrap">
           <div @click="closeLeftPanel" class="tagLeftBtn tagLeftBtn-Active">&lt;</div>
           <div>
-            <dataLeft v-if="valueSrc==='数据展示'" @loadAllPoints="loadAllPoints"/>
+            <dataLeft v-if="valueSrc==='数据展示'" @loadAllPoints="loadAllPoints" @location="location" />
             <alarmLeft v-if="valueSrc==='报警信息'"/>
             <gasLeft v-if="valueSrc==='环境空气'"/>
             <waterLeft v-if="valueSrc==='地表水'"/>
@@ -173,6 +173,9 @@ export default {
     },
     loadAllPoints(points) {
       this.$refs.baseMap.loadPoints(points);
+    },
+    location(popupType, point) {
+      this.$refs.baseMap.drawPopup(popupType, point)
     }
   },
   mounted() {

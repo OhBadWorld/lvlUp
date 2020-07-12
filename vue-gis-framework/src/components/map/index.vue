@@ -3,6 +3,9 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import popDataShow from '@/views/onlineMonitor/dataShow/PopData';
+
 import shadowImg from '@/assets/imgs/marker-shadow.png';
 import airImgI from './../../assets/imgs/air/p1.png';
 import airImgII from './../../assets/imgs/air/p2.png';
@@ -11,13 +14,14 @@ import airImgIV from './../../assets/imgs/air/p4.png';
 import airImgV from './../../assets/imgs/air/p5.png';
 import airImgVI from './../../assets/imgs/air/p6.png';
 import airImgVII from './../../assets/imgs/air/p0.png';
+
 // import L from 'leaflet';
 // import 'leaflet/dist/leaflet.css'
 var map; // 定义全局变量
 var mapurl='http://mt3.google.cn/vt/lyrs=m@207000000&hl=zh-CN&gl=CN&src=app&s=Galile&x={x}&y={y}&z={z}';  //谷歌矢量图
 // var mapurl='http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}';  //高德地图
 
-
+let ExDataShowPopup = Vue.extend(popDataShow); // 【在线监测】弹框
 
 export default {
   data () {
@@ -92,33 +96,62 @@ export default {
       }
       return currentIcon;
     },
+    // ================================================================================================================= 加载点位
     loadPoints(points) {
+      // debugger
       this.allPoints = points;
       this.clearPoints();
       let markGroup = [];
       if (this.allPoints && this.allPoints.length > 0) {
         for (let i = 0; i < this.allPoints.length; i++) {
-          const Y = this.allPoints[i].Y;
-          const X = this.allPoints[i].X;
-          const icon = this.allPoints[i].airQuality;  //本地自定义测试数据有该属性，接口中没有该数据
-          const currentIcon = this.customIcon(icon);  //调用自定义点位图标的方法，得到自定义的marker的icon
-          const singleMark = new this.LMap.marker([ Y, X ], { icon: currentIcon });
-          markGroup.push(singleMark);
+          // 处理点位信息
+          if (this.allPoints[i].IsPoint === '1') {
+            const Y = this.allPoints[i].Y;
+            const X = this.allPoints[i].X;
+            const icon = this.allPoints[i].airQuality;  //本地自定义测试数据有该属性，接口中没有该数据
+            const currentIcon = this.customIcon(icon);  //调用自定义点位图标的方法，得到自定义的marker的icon
+            // const singleMark = new this.LMap.marker([ Y, X ]).bindPopup('这是个Marker');
+            const singleMark = new this.LMap.marker([ Y, X ], { icon: currentIcon });
+
+            singleMark.addEventListener('click',() => {
+            // debugger
+            if (this.allPoints[i].portType === 'onlineData') { // 【标准空气站】弹框
+              this.drawPopup('popDataShow',this.allPoints[i]);
+            }});
+            markGroup.push(singleMark);
+            this.markLayer = this.LMap.layerGroup(markGroup);
+            map.addLayer(this.markLayer);
+          }
         }
-        this.markLayer = this.LMap.layerGroup(markGroup);
-        map.addLayer(this.markLayer);
       }
-      console.log(points);
       // this.LMap.marker([31.85618831, 120.56934479]).addTo(map)
       // .bindPopup('666')
       // .openPopup();
     },
+    // ================================================================================================================= 清除点位图层
     clearPoints() {
       if (this.markLayer !== undefined) {
         this.markLayer.clearLayers();
         map.removeLayer(this.markLayer);
       }
-    }
+    },
+    // ================================================================================================================= 设置点位弹框
+    drawPopup(popupType,pointInfo) {
+      let ExPopWinContent = null ;
+      switch(popupType)
+      {
+        case "popDataShow":
+          ExPopWinContent =new ExDataShowPopup({propsData:{pointInfo:pointInfo}}).$mount();
+          break;
+        default:
+          ExPopWinContent =new ExDataShowPopup({propsData:{pointInfo:pointInfo}}).$mount();
+      }
+      const popWin = this.LMap.popup({minWidth: 600, minHeight: 400}); // ,offset:this.LMap.createPoint(0,-20)
+      popWin.setLatLng(this.LMap.latLng(pointInfo.Y, pointInfo.X)); // 经度：lng 一般120.xxx ，纬度：lat 一般30.xxx 
+      popWin.setContent(ExPopWinContent.$el);
+      popWin.openOn(map);
+      map.setView(this.LMap.latLng(pointInfo.Y, pointInfo.X), map.getZoom()); // 定位到地图中心事件
+    },
   },
   mounted () {
     // this.loadMap();
@@ -131,4 +164,12 @@ export default {
   width: 100%;
   height: calc(100vh);
 }
+
+::v-deep .leaflet-popup {
+  position: absolute;
+  text-align: center;
+  margin-bottom: 20px;
+  top: -95px;
+}
+
 </style>

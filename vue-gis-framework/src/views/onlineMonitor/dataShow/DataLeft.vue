@@ -139,7 +139,7 @@ export default {
       ],
       checkedKeys: [], // 默认选中的节点
       allPoints: [], // 获取所有点位集合
-
+      poinstList: [], // 点位信息集合
     }
   },
   methods: {
@@ -147,84 +147,91 @@ export default {
       this.treeList = [];
       this.checkedKeys = [];
       this.allPoints = [];
-      this.$apiMethods.getTestData().then((res) => {
-        if (res.code === 200) {
-          this.treeList = res.data;
-          // 设置全选
-          this.checkedKeys.push(this.treeList[0].id);
-          // 加载出所有点位信息
-          this.allPoints = this.getAllPoints(res.data);
-          // console.log(this.allPoints);
-          this.$emit('loadAllPoints', this.allPoints)
-        }
-      });
 
       this.$apiMethods.getGasPointsData().then((res) => {
         if (res.code === 200) {
-          console.log(res);
+          // console.log(res);
+          // 将当前返回的数据 处理成 树能识别的结构
+          this.poinstList = res.data;
+          this.poinstList.forEach((item) => {
+            item.portType = 'onlineData'; // 设置点位类型，打开点位弹框的时候用
+          });
+          this.treeList = this.dealResData(res.data);
+          // 设置全选
+          this.checkedKeys.push(this.treeList[0].id);
+          // 点位分布加载
+          this.$emit('loadAllPoints', res.data)
         }
       });
     },
-    // 递归循环出树节点
-    getAllPoints(data) {
-      // debugger
-      // 1.递归截止条件
-      if (data.length == 0) return this.allPoints;
-      // 2.递归方法
-      if (data.length > 0) {
-      data.forEach(element => {
-        if (element.children && element.children.length >= 0) {
-          this.getAllPoints(element.children);
-        } else {
-          this.allPoints.push(element);
-        } 
-      });
+    // 将数据处理成树节点
+    dealResData(resData) {
+      let tempTreeData = [];
+      function aa(data, parent , n) {
+        if (data.length > 0) {
+          if (n === 1) {
+            data.forEach((ele) => {
+              if (ele.pId === '0') {
+                ele.children = [];
+                parent.push(ele);
+              }
+            });
+          }
+          if (n === 2) {
+            data = data.filter(x => x.pId !== '0');
+            data.forEach((ele) => {
+            if (ele.pId === parent[0].id) {
+                ele.children = [];
+                parent[0].children.push(ele);
+              }
+            });
+          }
+          if (n === 3){
+            data.forEach((ele) => {
+            if (ele.pId === parent.id) {
+                ele.children = [];
+                parent.children.push(ele);
+              }
+            });
+          }
+        }
+        return parent;
       }
-      // 3.返回结果
-      return this.allPoints
+
+      tempTreeData = aa(resData, tempTreeData, 1);
+      if (tempTreeData.length > 0) {
+        tempTreeData = aa(resData, tempTreeData, 2);
+        if (tempTreeData[0].children.length > 0) {
+          tempTreeData[0].children.forEach((item) => {
+            aa(resData, item, 3);
+          });
+        }
+      }
+      return tempTreeData;
     },
-    // ================================================================================================================= 也可以把递归写在方法里面 start
-    // getAllPoints(data) {
-    //   // debugger
-    //   let allPoints = [];
-    //   // 1.前期跳出条件
-    //   if (data.length == 0) return allPoints;
-    //   // 1.递归方法
-    //   function querypoints(data) {
-    //     if (data.length > 0) {
-    //     data.forEach(element => {
-    //       if (element.children && element.children.length >= 0) {
-    //         querypoints(element.children);
-    //       } else {
-    //         allPoints.push(element);
-    //       } 
-    //     });
-    //     }
-    //   }
-    //   // 2.调用递归方法，满足条件继续调用递归，不满足就接着往下走
-    //   querypoints(data);
-    //   return allPoints;
-    // },
-    // ================================================================================================================= 也可以把递归写在方法里面 end
     handleToQuery() {},
     // 树过滤方法
     filterNode(value, data) {},
     // 树 多选框点击事件
-    handleCheckChange(curObj, treeCheckedObj) {
-      console.log(curObj,treeCheckedObj);
-      if (curObj.children && curObj.children.length === 0) {
-        this.$Message({
-          showClose: true,
-          duration: 1000,
-          message: '当前节点下暂无点位'
-        });
-        return;
-      }
-      console.log(this.$refs.onlineTree.getCheckedKeys());
+    handleCheckChange() {
+      // 当前所有选中的树节点id集合
+      let pointIdsArray = this.$refs.onlineTree.getCheckedKeys();
+      // 根据当前选中的树节点id集合，展示相应的点位分布
+      let checkedMarkerList = [];
+      pointIdsArray.forEach((id) => {
+        this.poinstList.forEach((point) => {
+          if(point.id == id){
+            checkedMarkerList.push(point);
+          }
+        })
+      });
+      this.$emit('loadAllPoints', checkedMarkerList);
     },
-    // 树点击定位事件
-    Location() {
-      alert(666)
+    // 树点击定位事件, 并打开弹框
+    Location(curObj, curNode) {
+      if (curNode.checked && curObj.IsPoint === '1') {
+        this.$emit('location', 'popDataShow', curObj);
+      }
     },
   },
   mounted() {

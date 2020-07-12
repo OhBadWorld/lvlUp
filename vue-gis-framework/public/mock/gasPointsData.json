@@ -5,6 +5,7 @@
         "id": "bf4b76a2-8d6d-4b83-8e85-141e554a29a2",
         "pId": "0",
         "name": "站点归属",
+        "IsPoint": "0",
         "X": "--",
         "Y": "--"
       },
@@ -12,6 +13,7 @@
         "id": "8AAA4D6A-6882-46D5-A39A-C283A8CA58B8",
         "pId": "bf4b76a2-8d6d-4b83-8e85-141e554a29a2",
         "name": "国控",
+        "IsPoint": "0",
         "X": "--",
         "Y": "--"
       },
@@ -19,6 +21,7 @@
         "id": "A92F6729-6C4A-4142-927A-06E4187FEA90",
         "pId": "bf4b76a2-8d6d-4b83-8e85-141e554a29a2",
         "name": "省控",
+        "IsPoint": "0",
         "X": "--",
         "Y": "--"
       },
@@ -26,6 +29,7 @@
         "id": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "pId": "bf4b76a2-8d6d-4b83-8e85-141e554a29a2",
         "name": "市控",
+        "IsPoint": "0",
         "X": "--",
         "Y": "--"        
       },
@@ -33,8 +37,7 @@
         "id": "40",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "锦丰",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.64626101",
         "Y": "31.95789128",
         "airQuality": "I"
@@ -43,8 +46,7 @@
         "id": "30",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "移动监测车",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.56934479",
         "Y": "31.85618831",
         "airQuality": "I"
@@ -53,8 +55,7 @@
         "id": "31",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "监测站",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.53118860",
         "Y": "31.86526444",
         "airQuality": "I"
@@ -63,8 +64,7 @@
         "id": "34",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "沙洲湖",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.56709498",
         "Y": "31.90134260",
         "airQuality": "II"
@@ -73,8 +73,7 @@
         "id": "39",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "城北小学",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.55362585",
         "Y": "31.87984724",
         "airQuality": "I"
@@ -83,8 +82,7 @@
         "id": "35",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "南丰",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.67973971",
         "Y": "31.87697911",
         "airQuality": "I"
@@ -93,8 +91,7 @@
         "id": "29",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "凤凰",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.594177",
         "Y": "31.767289",
         "airQuality": "Deaflet"
@@ -103,8 +100,7 @@
         "id": "38",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "大新",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.54830896",
         "Y": "31.97094306",
         "airQuality": "I"
@@ -113,8 +109,7 @@
         "id": "26",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "双山岛",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.40354772",
         "Y": "31.97611551",
         "airQuality": "I"
@@ -123,8 +118,7 @@
         "id": "27",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "江南锅炉",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.50251082",
         "Y": "31.95963070",
         "airQuality": "I"
@@ -133,8 +127,7 @@
         "id": "28",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "保税区",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.44927288",
         "Y": "31.95719416",
         "airQuality": "I"
@@ -143,8 +136,7 @@
         "id": "36",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "康宁化学",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.47244152",
         "Y": "32.00095381",
         "airQuality": "III"
@@ -153,8 +145,7 @@
         "id": "41",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "乐余",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.70108086",
         "Y": "31.92602437",
         "airQuality": "I"
@@ -163,8 +154,7 @@
         "id": "42",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "东沙",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.78479800",
         "Y": "31.83174122",
         "airQuality": "II"
@@ -173,8 +163,7 @@
         "id": "32",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "现代农业示范园",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.77730400",
         "Y": "31.87554486",
         "airQuality": "I"
@@ -183,8 +172,7 @@
         "id": "33",
         "pId": "AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF",
         "name": "塘桥",
-        "IsPoint": "0",
-        "pState": "0",
+        "IsPoint": "1",
         "X": "120.64110339",
         "Y": "31.82378114",
         "airQuality": "I"
