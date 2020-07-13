@@ -280,24 +280,5 @@ export default {
   height: 30px;
   width: 146px;
 }
-/* ******滚动条样式******************* */
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,.3);
-  background-color: #FFFFFF;
-}
-
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,.3);
-  background-color: #CCCCCC;
-}
 
 </style>

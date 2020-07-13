@@ -110,7 +110,6 @@ export default {
             const X = this.allPoints[i].X;
             const icon = this.allPoints[i].airQuality;  //本地自定义测试数据有该属性，接口中没有该数据
             const currentIcon = this.customIcon(icon);  //调用自定义点位图标的方法，得到自定义的marker的icon
-            // const singleMark = new this.LMap.marker([ Y, X ]).bindPopup('这是个Marker');
             const singleMark = new this.LMap.marker([ Y, X ], { icon: currentIcon });
 
             singleMark.addEventListener('click',() => {
@@ -146,7 +145,8 @@ export default {
         default:
           ExPopWinContent =new ExDataShowPopup({propsData:{pointInfo:pointInfo}}).$mount();
       }
-      const popWin = this.LMap.popup({minWidth: 600, minHeight: 400}); // ,offset:this.LMap.createPoint(0,-20)
+      const popWin = this.LMap.popup(); // ,offset:this.LMap.createPoint(0,-20)
+      // const popWin = this.LMap.popup({minWidth: 600, minHeight: 400}); // ,offset:this.LMap.createPoint(0,-20)
       popWin.setLatLng(this.LMap.latLng(pointInfo.Y, pointInfo.X)); // 经度：lng 一般120.xxx ，纬度：lat 一般30.xxx 
       popWin.setContent(ExPopWinContent.$el);
       popWin.openOn(map);
@@ -159,17 +159,32 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #map{
   width: 100%;
   height: calc(100vh);
 }
 
+// ===================================================================================================================== 设置弹框大小
+::v-deep .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: white;
+    color: #333;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+    width: 640px;
+    height: 300px;
+}
+// ===================================================================================================================== 设置弹框内容大小
+::v-deep .leaflet-popup-content {
+    margin: 13px 19px;
+    line-height: 1.4;
+    width: 100% !important;
+}
+// ===================================================================================================================== 设置弹框弹出的相对位置
 ::v-deep .leaflet-popup {
   position: absolute;
   text-align: center;
   margin-bottom: 20px;
-  top: -95px;
+  bottom: 30px !important;
 }
 
 </style>

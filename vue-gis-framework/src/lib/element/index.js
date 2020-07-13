@@ -2,7 +2,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import {
   Button, Select, Option, OptionGroup, Loading, Icon,
   Dropdown, DropdownMenu, DropdownItem, Input, Tree,
-  Row, Col, Message
+  Row, Col, Message, Radio, RadioGroup
 } from 'element-ui';
 
 export default Vue => {
@@ -18,6 +18,8 @@ export default Vue => {
   Vue.component(Tree.name, Tree),
   Vue.component(Row.name, Row),
   Vue.component(Col.name, Col),
+  Vue.component(Radio.name, Radio),
+  Vue.component(RadioGroup.name, RadioGroup),
   Vue.prototype.$loading = Loading.service,
   Vue.prototype.$Message = Message
   /*

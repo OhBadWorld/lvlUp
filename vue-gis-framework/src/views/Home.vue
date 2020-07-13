@@ -136,6 +136,7 @@ export default {
     },
     handleToChange(num) {
       this.commandType = num;
+      this.clearLayer();
     },
     // ================================================================================================================= 左侧容器 start
     leftPanelBfEnter() {
@@ -175,8 +176,11 @@ export default {
       this.$refs.baseMap.loadPoints(points);
     },
     location(popupType, point) {
-      this.$refs.baseMap.drawPopup(popupType, point)
-    }
+      this.$refs.baseMap.drawPopup(popupType, point);
+    },
+    clearLayer() {
+      this.$refs.baseMap.clearPoints();
+    },
   },
   mounted() {
     this.$nextTick(() => {
