@@ -1,0 +1,155 @@
+{
+  "code": 200,
+  "msg": "操作成功",
+  "count": 117,
+  "data": [
+      {
+          "values": [
+              {
+                  "tstamp": "2019-07-01 00:00:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:01:00",
+                  "oneLevel": "--",
+                  "value": "1.2",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:02:00",
+                  "oneLevel": "--",
+                  "value": "1.0",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:03:00",
+                  "oneLevel": "--",
+                  "value": "1.1",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:04:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:05:00",
+                  "oneLevel": "--",
+                  "value": "0.8",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:06:00",
+                  "oneLevel": "--",
+                  "value": "0..9",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:07:00",
+                  "oneLevel": "--",
+                  "value": "0..9",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:08:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:09:00",
+                  "oneLevel": "--",
+                  "value": "0.7",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:10:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:11:00",
+                  "oneLevel": "--",
+                  "value": "1.2",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:12:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:13:00",
+                  "oneLevel": "--",
+                  "value": "1.1",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:14:00",
+                  "oneLevel": "--",
+                  "value": "1.11",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:15:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:16:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:17:00",
+                  "oneLevel": "--",
+                  "value": "1.21",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:18:00",
+                  "oneLevel": "--",
+                  "value": "1.0",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:19:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:20:00",
+                  "oneLevel": "--",
+                  "value": "0.99",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:21:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:22:00",
+                  "oneLevel": "--",
+                  "value": "1.3",
+                  "twoLevel": "--"
+              },
+              {
+                  "tstamp": "2019-07-01 00:23:00",
+                  "oneLevel": "--",
+                  "value": "1.1",
+                  "twoLevel": "--"
+              }
+          ]
+      }
+  ]
+}
