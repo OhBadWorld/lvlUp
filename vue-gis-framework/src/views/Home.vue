@@ -132,11 +132,13 @@ export default {
     },
     handleCommand(command) {
       console.log(command);
-      this.valueSrc = command;
+      if (this.valueSrc != command) {
+        this.valueSrc = command;
+        this.clearLayer();
+      }
     },
     handleToChange(num) {
       this.commandType = num;
-      this.clearLayer();
     },
     // ================================================================================================================= 左侧容器 start
     leftPanelBfEnter() {
@@ -320,7 +322,7 @@ export default {
   right: 5px;
   top: 0px;
   color: #333;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(251, 250, 246, 0.63);
   border-radius: 0 0 5px 0;
   height: 100vh;
   width: 380px;

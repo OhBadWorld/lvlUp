@@ -44,6 +44,7 @@
               <el-table-column prop="standardValue" label="标准值"></el-table-column>
             </el-table>
           </div>
+
           <div v-else style="margin-top: 15px;">
             <div style="display:inline-block;font-size: 16px;width: 242px;">最近48小时历史数据</div>
             <div style="display:inline-block;">
@@ -55,6 +56,9 @@
                   :value="item.value">
                 </el-option>
               </el-select>
+            </div>
+            <div>
+              <!-- <Echart theme="ovilia-green" :options="echartObj"/> -->
             </div>
           </div>
         </div>
@@ -121,8 +125,48 @@ export default {
         }, {
           value: '选项5',
           label: 'PM10'
-        }],
-        value: '选项1'
+        }
+      ],
+      value: '选项1',
+      echartObj: {
+        title : {
+            text: '会员数据统计',
+            subtext: '动态数据',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            show: true,
+            orient: 'vertical',
+            left: 'left',
+            data: ['微信访问','公众号访问','扫码进入','分享进入','搜索访问']
+        },
+        series : [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value:335, name:'微信访问'},
+                    {value:310, name:'公众号访问'},
+                    {value:234, name:'扫码进入'},
+                    {value:135, name:'分享进入'},
+                    {value:1548, name:'搜索访问'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+         ]
+      },
     };
   },
   mounted() {
