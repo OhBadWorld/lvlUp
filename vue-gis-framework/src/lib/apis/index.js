@@ -14,6 +14,16 @@ const apiMethods = {
       method: "get"
     })
   },
+  getLately48HoursData(portId, factorCode) {
+    return requests({
+      url: "/mock/lately48HoursData.json",
+      method: "get",
+      params: { // 如果是post请求的话，这里传参的字段就要改成data
+        portId: portId,
+        factorCode: factorCode
+      }
+    })
+  },
 };
 
 export function getTestData() {

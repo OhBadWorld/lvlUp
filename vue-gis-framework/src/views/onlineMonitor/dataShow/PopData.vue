@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="leftBody">
-          <el-radio-group v-model="radio">
+          <el-radio-group v-model="curPortId">
             <div v-for="item in dealPortList" :key="item.id" style="margin: 2px;width: 100%;height: 20px;">
               <el-radio :label="item.id" :disabled="!item.isOnline" @change="(val)=>checkRow(val, item)">{{item.portName}}</el-radio>
             </div>
@@ -24,10 +24,10 @@
         <div class="rightInfo">
           <div class="detailName">{{detailName}}</div>
           <div style="height: 28px;line-height: 28px;">
-            <span :class="{'tabBtn': true, 'checkTab': choseTab, 'uncheckTab': !choseTab}" @click="choseType('hour')">小时数据</span>
-            <span :class="{'tabBtn': true, 'checkTab': !choseTab, 'uncheckTab': choseTab}" @click="choseType('history')">历史数据</span>
+            <span :class="{'tabBtn': true, 'checkTab': choseTab==='hour', 'uncheckTab': choseTab==='history'}" @click="choseType('hour')">小时数据</span>
+            <span :class="{'tabBtn': true, 'checkTab': choseTab==='history', 'uncheckTab': choseTab==='hour'}" @click="choseType('history')">历史数据</span>
           </div>
-          <div v-if="choseTab" style="margin-top: 6px;">
+          <div v-if="choseTab === 'hour'" style="margin-top: 6px;">
             <div style="text-align: right;margin: 0px 3px 2px 0px;">更新时间：8/23  18 : 23</div>
             <el-table :data="tableData" height="200" border
               :header-cell-style="{'background': '#d3e7fc', 'color': '#2d8cf0'}"
@@ -48,7 +48,7 @@
           <div v-else style="margin-top: 15px;">
             <div style="display:inline-block;font-size: 16px;width: 242px;">最近48小时历史数据</div>
             <div style="display:inline-block;">
-              <el-select v-model="value" placeholder="请选择" style="width: 120px;">
+              <el-select v-model="curFactorCode" placeholder="请选择" style="width: 120px;" @change="((val)=>{changeFactorCode(val)})">
                 <el-option
                   v-for="item in factorList"
                   :key="item.value"
@@ -57,8 +57,8 @@
                 </el-option>
               </el-select>
             </div>
-            <div>
-              <!-- <Echart theme="ovilia-green" :options="echartObj"/> -->
+            <div style="width: 95%;height: 170px;">
+              <Echart :options="echartObj" :autoResize="true" style="width:100%;height:100%"/>
             </div>
           </div>
         </div>
@@ -70,6 +70,8 @@
 </template>
 
 <script>
+import echart from 'vue-echarts';
+
 export default {
   props: {
     pointInfo: {
@@ -96,10 +98,10 @@ export default {
         { id: '9', portName: 'xx排口9', isOnline: false },
         { id: '10', portName: 'xx排口10', isOnline: false },
       ],
-      radio: 1,
+      curPortId: 1, // // 当前选中的排口编码
       dealPortList: [],
       detailName: '',
-      choseTab: true,
+      choseTab: 'hour',
       tableData: [
         { factorName: '因子名称1', value: '23.65 mg/m3', standardValue: '54.36 mg/m3' },
         { factorName: '因子名称2', value: '15.03 mg/m3', standardValue: '16.35 mg/m3' },
@@ -127,57 +129,25 @@ export default {
           label: 'PM10'
         }
       ],
-      value: '选项1',
-      echartObj: {
-        title : {
-            text: '会员数据统计',
-            subtext: '动态数据',
-            x:'center'
-        },
-        tooltip : {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-            show: true,
-            orient: 'vertical',
-            left: 'left',
-            data: ['微信访问','公众号访问','扫码进入','分享进入','搜索访问']
-        },
-        series : [
-            {
-                name: '访问来源',
-                type: 'pie',
-                radius : '55%',
-                center: ['50%', '60%'],
-                data:[
-                    {value:335, name:'微信访问'},
-                    {value:310, name:'公众号访问'},
-                    {value:234, name:'扫码进入'},
-                    {value:135, name:'分享进入'},
-                    {value:1548, name:'搜索访问'}
-                ],
-                itemStyle: {
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }
-         ]
-      },
+      curFactorCode: '', // 当前选中的因子编码
+      echartsData: [],
+      echartObj: {},
     };
   },
   mounted() {
     this.loadData();
+    this.choseTab = 'hour'; // 默认选中小时数据选项卡
+    this.choseType('hour'); // 默认展示小时数据
   },
   methods: {
     loadData() {
-      // 这里是用来调接口的
+      // --------------------------------------------------------------------------------------------------------------- 这里是用来调接口的
+      // 获取排口数据 调接口
       this.dealPortList = this.portList;
-      this.radio = this.portList[0].id;
+      this.curPortId = this.portList[0].id;
       this.detailName = this.portList[0].portName;
+      // 获取因子下拉框数据 调接口
+      this.curFactorCode = this.factorList[0].value;
     },
     queryData(){
       if (this.queryName === '') {
@@ -186,21 +156,97 @@ export default {
         this.dealPortList = this.portList.filter(x => x.portName.indexOf(this.queryName) !== -1);
       }
     },
-    checkRow(val, item) {
-      console.log(val, item);
+    // ================================================================================================================= 切换排口
+    checkRow(curPortId, item) {
+      console.log(curPortId, item);
       this.detailName = item.portName;
+      if (this.choseTab === 'history') { // 说明切换到48小时选项卡
+        this.getEchartData(curPortId, this.curFactorCode);
+      }
     },
+    // ================================================================================================================= 切换选项卡
     choseType(type) {
-      this.choseTab = !this.choseTab;
+      this.choseTab = type;
       switch(type) {
         case 'hour':
+          // this.tableData 调接口获取数据
           break;
         case 'history':
+          this.getEchartData(this.curPortId, this.curFactorCode);
           break;
         default:
-
+          // this.tableData 调接口获取数据
       }
-    }
+    },
+    // ================================================================================================================= 切换因子
+    changeFactorCode(curFactorCode) {
+      this.getEchartData(this.curPortId, curFactorCode);
+    },
+    // ================================================================================================================= 获取echarts 折线数据
+    getEchartData(portId, factorCode) {
+      this.echartsData = [];
+      this.$apiMethods.getLately48HoursData(portId, factorCode).then((res) => {
+        if (res.code === 200) {
+          this.echartsData = res.data[0].values;
+          let XData = [];
+          let YData = [];
+          if (this.echartsData.length > 0) {
+            this.echartsData.forEach((item) => {
+              XData.push(item.tstamp);
+              YData.push(item.value);
+            });
+            this.loadEchartData(XData, YData);
+          }
+        }
+      });
+    },
+    // ================================================================================================================= 渲染echarts 折线数据
+    loadEchartData(XData, YData) {
+      this.echartObj = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        grid: {
+          top:'6%',
+          left: '6%',
+          right: '6%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          data: XData
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: YData,
+            type: 'line',
+            smooth: true, // true: 折线变成曲线
+            itemStyle:{ normal:{ color:'#47a6ff' } },
+            areaStyle: {
+              normal: {
+                color: new echart.graphic.LinearGradient(0, 0, 0, 1, [{    // 这里用到了echart
+                  offset: 0,
+                  color: '#47a6ff',
+                }, {
+                  offset: 1,
+                  color: '#fff',
+              }]),
+              },
+            }
+          }
+        ]
+      };
+    },
   },
 };
 </script>
