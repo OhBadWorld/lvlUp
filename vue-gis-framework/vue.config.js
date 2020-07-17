@@ -14,13 +14,13 @@ module.exports = {
         target: 'http://localhost:8080',
         changOrogin: true,
         pathRewrite: {
-          '^/api': ''
-        }
-      }
-    }
+          '^/api': '',
+        },
+      },
+    },
   },
   transpileDependencies: [
     'vue-echarts',
-    'resize-detector'
-  ]
-}
+    'resize-detector',
+  ],
+};

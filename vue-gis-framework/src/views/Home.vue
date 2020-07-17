@@ -66,7 +66,9 @@
 <script>
 import baseMap from '@/components/map';
 // 在线监控 --数据展示
+// eslint-disable-next-line vue/no-parsing-error
 import dataLeft from '@/views/onlineMonitor/dataShow/DataLeft.vue';
+// eslint-disable-next-line vue/no-parsing-error
 import dataRight from '@/views/onlineMonitor/dataShow/DataRight.vue';
 // 在线监控 --报警信息
 import alarmLeft from '@/views/onlineMonitor/alarmInfo/AlarmLeft.vue';
@@ -93,7 +95,7 @@ export default {
     waterLeft,
     waterRight,
     noiseLeft,
-    noiseRight
+    noiseRight,
   },
   name: 'Home',
   data() {
@@ -112,8 +114,8 @@ export default {
       onLineMonList: ['数据展示', '报警信息'],
       evnList: ['环境空气', '地表水', '环境噪声'],
       commandType: 0,
-      valueSrc: '数据展示'
-    }
+      valueSrc: '数据展示',
+    };
   },
   methods: {
     loadingScreen() {
@@ -122,7 +124,7 @@ export default {
         text: 'loading',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)',
-        customClass: 'zIndex'
+        customClass: 'zIndex',
       });
       return loading;
     },
@@ -132,7 +134,7 @@ export default {
     },
     handleCommand(command) {
       console.log(command);
-      if (this.valueSrc != command) {
+      if (this.valueSrc !== command) {
         this.valueSrc = command;
         this.clearLayer();
       }
@@ -193,9 +195,9 @@ export default {
       //     message: '这是一条消息提示'
       // });
     });
-  }
+  },
 
-}
+};
 </script>
 
 <style lang="scss" scoped>

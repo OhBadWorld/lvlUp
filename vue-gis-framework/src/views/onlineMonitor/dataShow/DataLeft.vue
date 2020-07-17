@@ -59,16 +59,16 @@ export default {
       siteName: '站点选择',
       categoryName: '',
       categoryList: [
-        { id:'000', label: '全部', type: 'all' },
-        { id:'001', label: '重点排污单位', type: 'zdpwdw' },
-        { id:'002', label: '废水', type: 'fs' },
-        { id:'003', label: '非重点排污单位', type: 'fzdpwdw' },
-        { id:'004', label: '废气', type: 'fq' },
+        { id: '000', label: '全部', type: 'all' },
+        { id: '001', label: '重点排污单位', type: 'zdpwdw' },
+        { id: '002', label: '废水', type: 'fs' },
+        { id: '003', label: '非重点排污单位', type: 'fzdpwdw' },
+        { id: '004', label: '废气', type: 'fq' },
       ],
       typeValue: '',
       typeList: [
-        { id:'001', label: '行政区划', type: 'xzqh' },
-        { id:'002', label: '站点归属', type: 'zdgs' },
+        { id: '001', label: '行政区划', type: 'xzqh' },
+        { id: '002', label: '站点归属', type: 'zdgs' },
       ],
       queryname: '',
       treeProps: {
@@ -140,7 +140,7 @@ export default {
       checkedKeys: [], // 默认选中的节点
       allPoints: [], // 获取所有点位集合
       poinstList: [], // 点位信息集合
-    }
+    };
   },
   methods: {
     loadTreeData() {
@@ -154,41 +154,46 @@ export default {
           // 将当前返回的数据 处理成 树能识别的结构
           this.poinstList = res.data;
           this.poinstList.forEach((item) => {
+            // eslint-disable-next-line no-param-reassign
             item.portType = 'onlineData'; // 设置点位类型，打开点位弹框的时候用
           });
           this.treeList = this.dealResData(res.data);
           // 设置全选
           this.checkedKeys.push(this.treeList[0].id);
           // 点位分布加载
-          this.$emit('loadAllPoints', res.data)
+          this.$emit('loadAllPoints', res.data);
         }
       });
     },
     // 将数据处理成树节点
     dealResData(resData) {
       let tempTreeData = [];
-      function aa(data, parent , n) {
+      function aa(data, parent, n) {
         if (data.length > 0) {
           if (n === 1) {
             data.forEach((ele) => {
               if (ele.pId === '0') {
+                // eslint-disable-next-line no-param-reassign
                 ele.children = [];
                 parent.push(ele);
               }
             });
           }
           if (n === 2) {
-            data = data.filter(x => x.pId !== '0');
+            // eslint-disable-next-line no-param-reassign
+            data = data.filter((x) => x.pId !== '0');
             data.forEach((ele) => {
-            if (ele.pId === parent[0].id) {
+              if (ele.pId === parent[0].id) {
+                // eslint-disable-next-line no-param-reassign
                 ele.children = [];
                 parent[0].children.push(ele);
               }
             });
           }
-          if (n === 3){
+          if (n === 3) {
             data.forEach((ele) => {
-            if (ele.pId === parent.id) {
+              if (ele.pId === parent.id) {
+                // eslint-disable-next-line no-param-reassign
                 ele.children = [];
                 parent.children.push(ele);
               }
@@ -211,19 +216,21 @@ export default {
     },
     handleToQuery() {},
     // 树过滤方法
-    filterNode(value, data) {},
+    filterNode() {
+      // value, data 参数
+    },
     // 树 多选框点击事件
     handleCheckChange() {
       // 当前所有选中的树节点id集合
-      let pointIdsArray = this.$refs.onlineTree.getCheckedKeys();
+      const pointIdsArray = this.$refs.onlineTree.getCheckedKeys();
       // 根据当前选中的树节点id集合，展示相应的点位分布
-      let checkedMarkerList = [];
+      const checkedMarkerList = [];
       pointIdsArray.forEach((id) => {
         this.poinstList.forEach((point) => {
-          if(point.id == id){
+          if (point.id === id) {
             checkedMarkerList.push(point);
           }
-        })
+        });
       });
       this.$emit('loadAllPoints', checkedMarkerList);
     },
@@ -236,8 +243,8 @@ export default {
   },
   mounted() {
     this.loadTreeData();
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

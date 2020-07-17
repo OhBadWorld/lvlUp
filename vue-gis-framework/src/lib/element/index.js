@@ -2,10 +2,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 import {
   Button, Select, Option, OptionGroup, Loading, Icon,
   Dropdown, DropdownMenu, DropdownItem, Input, Tree,
-  Row, Col, Message, Radio, RadioGroup, Table, TableColumn
+  Row, Col, Message, Radio, RadioGroup, Table, TableColumn,
 } from 'element-ui';
 
-export default Vue => {
+export default (Vue) => {
   Vue.component(Button.name, Button),
   Vue.component(Select.name, Select),
   Vue.component(Option.name, Option),
@@ -23,7 +23,7 @@ export default Vue => {
   Vue.component(Table.name, Table),
   Vue.component(TableColumn.name, TableColumn),
   Vue.prototype.$loading = Loading.service,
-  Vue.prototype.$Message = Message
+  Vue.prototype.$Message = Message,
   /*
    * 或写为
    * Vue.use(Button)
@@ -169,29 +169,29 @@ Vue.use(CarouselItem);
 Vue.use(Collapse);
 Vue.use(CollapseItem);
 Vue.use(Cascader);
-Vue.use(ColorPicker); 
-Vue.use(Transfer); 
-Vue.use(Container); 
-Vue.use(Header); 
-Vue.use(Aside); 
-Vue.use(Main); 
-Vue.use(Footer); 
-Vue.use(Timeline); 
-Vue.use(TimelineItem); 
-Vue.use(Link); 
-Vue.use(Divider); 
-Vue.use(Image); 
-Vue.use(Calendar); 
-Vue.use(Backtop); 
-Vue.use(PageHeader); 
-Vue.use(CascaderPanel); 
-Vue.use(Loading.directive); 
+Vue.use(ColorPicker);
+Vue.use(Transfer);
+Vue.use(Container);
+Vue.use(Header);
+Vue.use(Aside);
+Vue.use(Main);
+Vue.use(Footer);
+Vue.use(Timeline);
+Vue.use(TimelineItem);
+Vue.use(Link);
+Vue.use(Divider);
+Vue.use(Image);
+Vue.use(Calendar);
+Vue.use(Backtop);
+Vue.use(PageHeader);
+Vue.use(CascaderPanel);
+Vue.use(Loading.directive);
 
-Vue.prototype.$loading = Loading.service; 
-Vue.prototype.$msgbox = MessageBox; 
-Vue.prototype.$alert = MessageBox.alert; 
-Vue.prototype.$confirm = MessageBox.confirm; 
-Vue.prototype.$prompt = MessageBox.prompt; 
-Vue.prototype.$notify = Notification; 
+Vue.prototype.$loading = Loading.service;
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
+Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 */

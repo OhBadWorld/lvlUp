@@ -30,7 +30,7 @@ import baseMap from '@/components/map';
 
 export default {
   components: {
-    baseMap
+    baseMap,
   },
   name: 'Home',
   data() {
@@ -43,7 +43,7 @@ export default {
       bottomPanelShow: false, // 【底部容器是否展示】
       legendPanelShow: false, // 【图例容器是否展示】
       toolPanelShow: false, // 【工具条容器是否展示】
-    }
+    };
   },
   methods: {
     loadingScreen() {
@@ -52,7 +52,7 @@ export default {
         text: 'loading',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)',
-        customClass: 'zIndex'
+        customClass: 'zIndex',
       });
       return loading;
     },
@@ -65,21 +65,21 @@ export default {
     },
     // 展开【左侧容器】内的内容
     openLeftPanel() {
-      
+      //
     },
     // 折叠【左侧容器】内的内容
     closeLeftPanel() {
-      
-    }
+      //
+    },
     // ================================================================================================================= 左侧容器 end
   },
   mounted() {
     this.$nextTick(() => {
       this.loadingScreen().close();
     });
-  }
+  },
 
-}
+};
 </script>
 
 <style scoped>
