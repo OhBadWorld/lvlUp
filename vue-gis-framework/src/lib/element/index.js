@@ -6,29 +6,31 @@ import {
 } from 'element-ui';
 
 export default (Vue) => {
-  Vue.component(Button.name, Button),
-  Vue.component(Select.name, Select),
-  Vue.component(Option.name, Option),
-  Vue.component(OptionGroup.name, OptionGroup),
-  Vue.component(Icon.name, Icon),
-  Vue.component(Dropdown.name, Dropdown),
-  Vue.component(DropdownMenu.name, DropdownMenu),
-  Vue.component(DropdownItem.name, DropdownItem),
-  Vue.component(Input.name, Input),
-  Vue.component(Tree.name, Tree),
-  Vue.component(Row.name, Row),
-  Vue.component(Col.name, Col),
-  Vue.component(Radio.name, Radio),
-  Vue.component(RadioGroup.name, RadioGroup),
-  Vue.component(Table.name, Table),
-  Vue.component(TableColumn.name, TableColumn),
-  Vue.prototype.$loading = Loading.service,
-  Vue.prototype.$Message = Message,
+  Vue.component(Button.name, Button);
+  Vue.component(Select.name, Select);
+  Vue.component(Option.name, Option);
+  Vue.component(OptionGroup.name, OptionGroup);
+  Vue.component(Icon.name, Icon);
+  Vue.component(Dropdown.name, Dropdown);
+  Vue.component(DropdownMenu.name, DropdownMenu);
+  Vue.component(DropdownItem.name, DropdownItem);
+  Vue.component(Input.name, Input);
+  Vue.component(Tree.name, Tree);
+  Vue.component(Row.name, Row);
+  Vue.component(Col.name, Col);
+  Vue.component(Radio.name, Radio);
+  Vue.component(RadioGroup.name, RadioGroup);
+  Vue.component(Table.name, Table);
+  Vue.component(TableColumn.name, TableColumn);
+  // eslint-disable-next-line no-param-reassign
+  Vue.prototype.$loading = Loading.service;
+  // eslint-disable-next-line no-param-reassign
+  Vue.prototype.$Message = Message;
   /*
    * 或写为
    * Vue.use(Button)
    */
-}
+};
 
 /* 完整组件列表和引入方式（完整组件列表以 components.json 为准）
 import Vue from 'vue';

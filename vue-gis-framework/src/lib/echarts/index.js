@@ -13,6 +13,4 @@ import 'echarts/lib/component/legend';
 // 标题
 import 'echarts/lib/component/title';
 
-export default (Vue) => {
-  Vue.component('Echart', Echart),
-}
+export default (Vue) => { Vue.component('Echart', Echart); };
