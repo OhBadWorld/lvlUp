@@ -5,6 +5,7 @@ import LMap from './lib/leaflet';
 import VueEchart from './lib/echarts';
 import router from './router';
 import apiMethods from './lib/apis';
+import './assets/icon/iconfont.css';
 
 Vue.config.productionTip = false;
 

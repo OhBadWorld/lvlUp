@@ -1,5 +1,9 @@
 <template>
+<div>
   <div id="map"></div>
+  <mapTool />
+
+</div>
 </template>
 
 <script>
@@ -16,6 +20,8 @@ import airImgV from '../../assets/imgs/air/p5.png';
 import airImgVI from '../../assets/imgs/air/p6.png';
 import airImgVII from '../../assets/imgs/air/p0.png';
 
+import mapTool from './mapTools.vue';
+
 // import L from 'leaflet';
 // import 'leaflet/dist/leaflet.css'
 let map; // 定义全局变量
@@ -25,6 +31,9 @@ const mapurl = 'http://mt3.google.cn/vt/lyrs=m@207000000&hl=zh-CN&gl=CN&src=app&
 const ExDataShowPopup = Vue.extend(popDataShow); // 【在线监测】弹框
 
 export default {
+  components: {
+    mapTool,
+  },
   data() {
     return {
       markLayer: undefined,
