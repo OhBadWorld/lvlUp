@@ -3,6 +3,7 @@ import {
   Button, Select, Option, OptionGroup, Loading, Icon,
   Dropdown, DropdownMenu, DropdownItem, Input, Tree,
   Row, Col, Message, Radio, RadioGroup, Table, TableColumn,
+  Tooltip,
 } from 'element-ui';
 
 export default (Vue) => {
@@ -22,6 +23,7 @@ export default (Vue) => {
   Vue.component(RadioGroup.name, RadioGroup);
   Vue.component(Table.name, Table);
   Vue.component(TableColumn.name, TableColumn);
+  Vue.component(Tooltip.name, Tooltip);
   // eslint-disable-next-line no-param-reassign
   Vue.prototype.$loading = Loading.service;
   // eslint-disable-next-line no-param-reassign

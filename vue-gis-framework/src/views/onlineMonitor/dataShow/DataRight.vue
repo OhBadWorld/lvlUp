@@ -159,7 +159,7 @@ export default {
 .echartItem{
   margin: 6px;
   padding: 6px;
-  width: 362px;
+  width: 355px;
   height: 320px;
   border-radius: 10px;
   background-color: white;

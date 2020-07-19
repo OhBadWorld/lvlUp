@@ -1,7 +1,8 @@
 <template>
 <div>
-  <div id="map"></div>
-  <mapTool />
+  <div id="map">
+    <mapTool @zoomIn="zoomIn" @zoomOut="zoomOut" />
+  </div>
 
 </div>
 </template>
@@ -49,6 +50,7 @@ export default {
         maxzoom: 18,
         minzoom: 1,
         zoomControl: false, // 是否默认缩放控件添加到地图
+        attributionControl: false, // 去除‘leaflet’字样
         editable: true, // 用于测绘
       });
       this.LMap.tileLayer(
@@ -163,6 +165,14 @@ export default {
       popWin.setContent(ExPopWinContent.$el);
       popWin.openOn(map);
       map.setView(this.LMap.latLng(pointInfo.Y, pointInfo.X), map.getZoom()); // 定位到地图中心事件
+    },
+    // ================================================================================================================= 地图放大功能
+    zoomIn() {
+      map.zoomIn();
+    },
+    // ================================================================================================================= 地图缩小功能
+    zoomOut() {
+      map.zoomOut();
     },
   },
   mounted() {
