@@ -1,7 +1,7 @@
 <template>
 <div>
   <div id="map">
-    <mapTool @zoomIn="zoomIn" @zoomOut="zoomOut" />
+    <mapTool @zoomIn="zoomIn" @zoomOut="zoomOut" :zuobiao="zuobiaoData"/>
   </div>
 
 </div>
@@ -37,8 +37,13 @@ export default {
   },
   data() {
     return {
-      markLayer: undefined,
+      markLayer: undefined, // 存放点位集合的图层
       allPoints: [],
+      zuobiaoData: {
+        lat: '0', // 纬度
+        lng: '0', // 经度
+        level: 20, // 层级
+      },
     };
   },
   methods: {
@@ -174,9 +179,19 @@ export default {
     zoomOut() {
       map.zoomOut();
     },
+    // ================================================================================================================= 实时经纬度
+    RealLatLng() {
+      map.on('mousemove', (e) => {
+        Vue.set(this.zuobiaoData, 'lat', e.latlng.lat.toString().substring(0, 9)); // 纬度 // 通过点方法赋值，发现观察不到p的变化
+        Vue.set(this.zuobiaoData, 'lng', e.latlng.lng.toString().substring(0, 9)); // 经度 // 通过点方法赋值，发现观察不到p的变化
+        Vue.set(this.zuobiaoData, 'level', e.target.getZoom()); // 层级 // 通过点方法赋值，发现观察不到p的变化
+        // console.log(this.zuobiaoData);
+      });
+    },
   },
   mounted() {
-    // this.loadMap();
+    this.loadMap(); // 加载地图图层
+    this.RealLatLng(); // 绑定地图移动事件
   },
 };
 </script>

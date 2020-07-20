@@ -189,7 +189,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.loadingScreen().close();
-      this.loadBaseMap();
+      // this.loadBaseMap(); // 加载地图图层
       // this.$Message({
       //   showClose: true,
       //     message: '这是一条消息提示'
