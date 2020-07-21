@@ -30,27 +30,28 @@
         <el-tooltip content="图层" placement="right" effect="light">
           <i class="icon iconfont icon-tuceng icons" @click="selectFuc('tuceng')"></i>
         </el-tooltip>
-      </div>
-    </div>
-    <div>
-      <div v-show="pActiveTool == 'dituqiehuan'" class="shadow toolsLayersChange">
-        <div class="gf-mapStyleS">
-          <!-- <img :src="huangshanVectorMap" alt="" @click="changeMapLayer('谷歌')"> -->
-          <p>矢量图</p>
+        <div v-show="pActiveTool == 'dituqiehuan'" class="shadow toolsLayersChange">
+          <div class="gf-mapStyleS">
+            <img :src="googelMap" alt="" @click="changeLayer('google')">
+            <p>谷歌</p>
+          </div>
+          <div class="gf-mapStyleS">
+            <img :src="gaodeMap" alt="" @click="changeLayer('gaode')">
+            <p>高德</p>
+          </div>
+          <!-- <div style="margin-left: 8px;" class="showNames">
+            <el-checkbox v-model="showBusinessName" @change="isShowBusName" color="white">展示企业名称</el-checkbox>
+          </div> -->
         </div>
-        <div class="gf-mapStyleS">
-          <!-- <img :src="huangshanImg" alt="" @click="changeMapLayer('高德')"> -->
-          <p>影像图</p>
-        </div>
-        <!-- <div style="margin-left: 8px;" class="showNames">
-          <el-checkbox v-model="showBusinessName" @change="isShowBusName" color="white">展示企业名称</el-checkbox>
-        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import googelMap from '../../assets/imgs/googleMap.png';
+import gaodeMap from '../../assets/imgs/gaodeMap.png';
+
 export default {
   props: {
     zuobiao: {
@@ -77,6 +78,8 @@ export default {
       pIsFold: true, // true:收缩工具栏， false:展开工具栏
       pActiveTool: '',
       showBusinessName: true,
+      googelMap,
+      gaodeMap,
     };
   },
   methods: {
@@ -104,10 +107,12 @@ export default {
           //
       }
     },
-  },
-  changeMapLayer() {},
-  isShowBusName(val) {
-    this.showBusinessName = val;
+    changeLayer(layerType) {
+      this.$emit('changeMapLayer', layerType);
+    },
+    isShowBusName(val) {
+      this.showBusinessName = val;
+    },
   },
 };
 </script>
@@ -165,7 +170,18 @@ export default {
   font-size: 14px;
   text-align: left;
 }
-
+.toolsLayersChange {
+  position: relative;
+  padding: 4px 10px 10px 4px;
+  left: 50px;
+  width: 250px;
+  height: 108px;
+  color: #FFFFFF;
+  border: 2px solid #fff;
+  border-radius: 7px;
+  background: rgba(251, 250, 246, 0.63);
+  top: -132px;
+}
 .gf-mapStyleS{
     border-radius: 3px;
     width: 111px;

@@ -64,8 +64,6 @@
         </div>
       </el-col>
     </el-row>
-    
-    
   </div>
 </template>
 
@@ -78,7 +76,7 @@ export default {
       type: Object,
       default() {
         return {
-          name: '123'
+          name: '123',
         };
       },
     },
@@ -114,20 +112,20 @@ export default {
       factorList: [
         {
           value: '选项1',
-          label: 'COD'
+          label: 'COD',
         }, {
           value: '选项2',
-          label: 'O3'
+          label: 'O3',
         }, {
           value: '选项3',
-          label: 'NO'
+          label: 'NO',
         }, {
           value: '选项4',
-          label: 'PM2.5'
+          label: 'PM2.5',
         }, {
           value: '选项5',
-          label: 'PM10'
-        }
+          label: 'PM10',
+        },
       ],
       curFactorCode: '', // 当前选中的因子编码
       echartsData: [],
@@ -149,11 +147,11 @@ export default {
       // 获取因子下拉框数据 调接口
       this.curFactorCode = this.factorList[0].value;
     },
-    queryData(){
+    queryData() {
       if (this.queryName === '') {
         this.dealPortList = this.portList;
       } else {
-        this.dealPortList = this.portList.filter(x => x.portName.indexOf(this.queryName) !== -1);
+        this.dealPortList = this.portList.filter((x) => x.portName.indexOf(this.queryName) !== -1);
       }
     },
     // ================================================================================================================= 切换排口
@@ -167,7 +165,7 @@ export default {
     // ================================================================================================================= 切换选项卡
     choseType(type) {
       this.choseTab = type;
-      switch(type) {
+      switch (type) {
         case 'hour':
           // this.tableData 调接口获取数据
           break;
@@ -188,8 +186,8 @@ export default {
       this.$apiMethods.getLately48HoursData(portId, factorCode).then((res) => {
         if (res.code === 200) {
           this.echartsData = res.data[0].values;
-          let XData = [];
-          let YData = [];
+          const XData = [];
+          const YData = [];
           if (this.echartsData.length > 0) {
             this.echartsData.forEach((item) => {
               XData.push(item.tstamp);
@@ -208,43 +206,43 @@ export default {
           axisPointer: {
             type: 'cross',
             label: {
-              backgroundColor: '#6a7985'
-            }
-          }
+              backgroundColor: '#6a7985',
+            },
+          },
         },
         grid: {
-          top:'6%',
+          top: '6%',
           left: '6%',
           right: '6%',
           bottom: '3%',
-          containLabel: true
+          containLabel: true,
         },
         xAxis: {
           type: 'category',
-          data: XData
+          data: XData,
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
         },
         series: [
           {
             data: YData,
             type: 'line',
             smooth: true, // true: 折线变成曲线
-            itemStyle:{ normal:{ color:'#47a6ff' } },
+            itemStyle: { normal: { color: '#47a6ff' } },
             areaStyle: {
               normal: {
-                color: new echart.graphic.LinearGradient(0, 0, 0, 1, [{    // 这里用到了echart
+                color: new echart.graphic.LinearGradient(0, 0, 0, 1, [{ // 这里用到了echart
                   offset: 0,
                   color: '#47a6ff',
                 }, {
                   offset: 1,
                   color: '#fff',
-              }]),
+                }]),
               },
-            }
-          }
-        ]
+            },
+          },
+        ],
       };
     },
   },

@@ -1,7 +1,7 @@
 <template>
 <div>
   <div id="map">
-    <mapTool @zoomIn="zoomIn" @zoomOut="zoomOut" :zuobiao="zuobiaoData"/>
+    <mapTool @zoomIn="zoomIn" @zoomOut="zoomOut" :zuobiao="zuobiaoData" @changeMapLayer="changeMapLayer"/>
   </div>
 
 </div>
@@ -23,11 +23,9 @@ import airImgVII from '../../assets/imgs/air/p0.png';
 
 import mapTool from './mapTools.vue';
 
-// import L from 'leaflet';
-// import 'leaflet/dist/leaflet.css'
 let map; // 定义全局变量
-const mapurl = 'http://mt3.google.cn/vt/lyrs=m@207000000&hl=zh-CN&gl=CN&src=app&s=Galile&x={x}&y={y}&z={z}'; // 谷歌矢量图
-// var mapurl='http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}';  //高德地图
+const googelMapurl = 'http://mt3.google.cn/vt/lyrs=m@207000000&hl=zh-CN&gl=CN&src=app&s=Galile&x={x}&y={y}&z={z}'; // 谷歌矢量图
+const gaodeMapurl = 'http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}'; // 高德地图
 
 const ExDataShowPopup = Vue.extend(popDataShow); // 【在线监测】弹框
 
@@ -44,27 +42,34 @@ export default {
         lng: '0', // 经度
         level: 20, // 层级
       },
+      mapGoogel: undefined, // 存放谷歌地图的底图
+      mapGaode: undefined, // 存放高德地图的底图
+      layerGoogel: undefined, // 存放谷歌地图的图层
+      layerGaode: undefined, // 存放高德地图的图层
+      // googelMap,
     };
   },
   methods: {
-    loadMap() {
-      // console.log(this.LMap)
-      map = this.LMap.map('map', {
-        center: [31.95789128, 120.64626101],
-        zoom: 11,
-        maxzoom: 18,
-        minzoom: 1,
-        zoomControl: false, // 是否默认缩放控件添加到地图
-        attributionControl: false, // 去除‘leaflet’字样
-        editable: true, // 用于测绘
-      });
-      this.LMap.tileLayer(
-        mapurl,
-        {
-          subdomains: ['1', '2', '3', '4'],
-          attribution: '谷歌',
-        },
-      ).addTo(map);
+    changeMapLayer(layerType) {
+      // 初次加载谷歌图层，预加载作用
+      if (this.layerGoogel === undefined) {
+        this.mapGoogel = this.LMap.tileLayer(googelMapurl, { minZoom: 10, maxZoom: 20 });
+        this.layerGoogel = this.LMap.layerGroup([this.mapGoogel]);
+      }
+      // 初次加载高德图层，预加载作用
+      if (this.layerGaode === undefined) {
+        this.mapGaode = this.LMap.tileLayer(gaodeMapurl, { subdomains: ['1', '2', '3', '4'], minZoom: 10, maxZoom: 20 });
+        this.layerGaode = this.LMap.layerGroup([this.mapGaode]); // 加载多个底图的时候
+        // this.mapItem2 = this.LMap.tileLayer(this.oneMapNotes);
+        // this.layerImg = this.LMap.layerGroup([this.mapItem1, this.mapItem2]); // 加载多个底图的时候
+      }
+      if (layerType === 'google') {
+        map.removeLayer(this.layerGaode);
+        this.layerGoogel.addTo(map);
+      } else if (layerType === 'gaode') {
+        map.removeLayer(this.layerGoogel);
+        this.layerGaode.addTo(map);
+      }
     },
     // ================================================================================================================= 使用用户自己的图标 ----气
     customIcon(icon) {
@@ -190,7 +195,17 @@ export default {
     },
   },
   mounted() {
-    this.loadMap(); // 加载地图图层
+    // console.log(this.LMap)
+    map = this.LMap.map('map', {
+      center: [31.95789128, 120.64626101],
+      zoom: 11,
+      maxzoom: 18,
+      minzoom: 1,
+      zoomControl: false, // 是否默认缩放控件添加到地图
+      attributionControl: false, // 去除‘leaflet’字样
+      editable: true, // 用于测绘
+    });
+    this.changeMapLayer('google'); // 默认加载谷歌地图底图
     this.RealLatLng(); // 绑定地图移动事件
   },
 };
