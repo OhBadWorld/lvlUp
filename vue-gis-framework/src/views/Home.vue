@@ -33,7 +33,7 @@
           <div @click="closeLeftPanel" class="tagLeftBtn tagLeftBtn-Active">&lt;</div>
           <div>
             <dataLeft v-if="valueSrc==='数据展示'" @loadAllPoints="loadAllPoints" @location="location" />
-            <alarmLeft v-if="valueSrc==='报警信息'"/>
+            <alarmLeft v-if="valueSrc==='报警信息'" @loadAllPoints="loadAllPoints" @location="location"/>
             <gasLeft v-if="valueSrc==='环境空气'"/>
             <waterLeft v-if="valueSrc==='地表水'"/>
             <noiseLeft v-if="valueSrc==='环境噪声'"/>

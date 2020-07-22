@@ -12,5 +12,7 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/legend';
 // 标题
 import 'echarts/lib/component/title';
+// 标线
+import 'echarts/lib/component/markLine';
 
 export default (Vue) => { Vue.component('Echart', Echart); };

@@ -11,6 +11,7 @@
 import Vue from 'vue';
 // eslint-disable-next-line vue/no-parsing-error
 import popDataShow from '@/views/onlineMonitor/dataShow/PopData';
+import popAlarmShow from '@/views/onlineMonitor/alarmInfo/PopAlarm';
 
 // import shadowImg from '@/assets/imgs/marker-shadow.png';
 import airImgI from '../../assets/imgs/air/p1.png';
@@ -28,6 +29,7 @@ const googelMapurl = 'http://mt3.google.cn/vt/lyrs=m@207000000&hl=zh-CN&gl=CN&sr
 const gaodeMapurl = 'http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}'; // 高德地图
 
 const ExDataShowPopup = Vue.extend(popDataShow); // 【在线监测】弹框
+const ExAlarmShowPopup = Vue.extend(popAlarmShow); // 【在线监测】弹框
 
 export default {
   components: {
@@ -137,9 +139,12 @@ export default {
             const singleMark = new this.LMap.marker([Y, X], { icon: currentIcon });
 
             singleMark.addEventListener('click', () => {
-            // debugger
+              // debugger;
               if (this.allPoints[i].portType === 'onlineData') { // 【标准空气站】弹框
                 this.drawPopup('popDataShow', this.allPoints[i]);
+              }
+              if (this.allPoints[i].portType === 'alarmData') { // 【标准空气站】弹框
+                this.drawPopup('popAlarmShow', this.allPoints[i]);
               }
             });
             markGroup.push(singleMark);
@@ -161,10 +166,14 @@ export default {
     },
     // ================================================================================================================= 设置点位弹框
     drawPopup(popupType, pointInfo) {
+      // debugger;
       let ExPopWinContent = null;
       switch (popupType) {
         case 'popDataShow':
           ExPopWinContent = new ExDataShowPopup({ propsData: { pointInfo } }).$mount();
+          break;
+        case 'popAlarmShow':
+          ExPopWinContent = new ExAlarmShowPopup({ propsData: { pointInfo } }).$mount();
           break;
         default:
           ExPopWinContent = new ExDataShowPopup({ propsData: { pointInfo } }).$mount();
