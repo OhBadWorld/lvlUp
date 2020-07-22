@@ -42,18 +42,28 @@
       </transition>
     </div>
     <!-- =============================================================================================================== 右侧容器 -->
-    <div v-if="rightPanelShow">
+    <div v-if="rightPanelShow  && commandType === 0">
       <div v-show="rightPanelTagShow" @click="openRightPanel" class="zIndex tagRightBtn tagRightBtn-AlwayShow"><span class="tagRightBtnTxt">&lt;</span></div>
       <transition name="rightPanel" @before-enter="rightPanelBfEnter" @after-leave="rightPanelAfLeave">
         <div v-show="rightContainerShow" class="zIndex rightPanelWrap">
           <div @click="closeRightPanel" class="tagRightBtn tagRightBtn-Active"><span class="tagRightBtnTxt">&gt;</span></div>
-          <div>
-            <dataRight v-if="valueSrc==='数据展示'"/>
-            <alarmRight v-if="valueSrc==='报警信息'"/>
-            <gasRight v-if="valueSrc==='环境空气'"/>
-            <waterRight v-if="valueSrc==='地表水'"/>
-            <noiseRight v-if="valueSrc==='环境噪声'"/>
-          </div>
+            <div>
+              <dataRight v-if="valueSrc==='数据展示'"/>
+              <alarmRight v-if="valueSrc==='报警信息'"/>
+            </div>
+        </div>
+      </transition>
+    </div>
+    <div v-if="rightPanelShow  && commandType === 1">
+      <div v-show="rightPanelTagShow" @click="openRightPanel" class="zIndex tagRightBtn3 tagRightBtn-AlwayShow"><span class="tagRightBtnTxt">&lt;</span></div>
+      <transition name="rightPanel" @before-enter="rightPanelBfEnter" @after-leave="rightPanelAfLeave">
+        <div v-show="rightContainerShow" class="zIndex rightPanelWrap2">
+          <div @click="closeRightPanel" class="tagRightBtn2 tagRightBtn-Active"><span class="tagRightBtnTxt">&gt;</span></div>
+            <div>
+              <gasRight v-if="valueSrc==='环境空气'"/>
+              <waterRight v-if="valueSrc==='地表水'"/>
+              <noiseRight v-if="valueSrc==='环境噪声'"/>
+            </div>
         </div>
       </transition>
     </div>
@@ -115,6 +125,7 @@ export default {
       evnList: ['环境空气', '地表水', '环境噪声'],
       commandType: 0,
       valueSrc: '数据展示',
+      tabType: 0,
     };
   },
   methods: {
@@ -135,6 +146,8 @@ export default {
     handleCommand(command) {
       console.log(command);
       if (this.valueSrc !== command) {
+        this.openLeftPanel(); // 每次切换选项，都默认左容器是打开状态
+        this.openRightPanel(); // 每次切换选项，都默认右容器是打开状态
         this.valueSrc = command;
         this.clearLayer();
       }
@@ -331,6 +344,40 @@ export default {
   border-radius: 0 0 5px 0;
   height: 100vh;
   width: 380px;
+}
+.rightPanelWrap2 {
+  position: fixed;
+  display:block;
+  clear:both;
+  right: 5px;
+  top: 100px;
+  color: #333;
+  background: rgba(251, 250, 246, 0.63);
+  border-radius: 0 0 5px 0;
+  height: 590px;
+  width: 380px;
+}
+.tagRightBtn2 {
+  position: absolute;
+  top: 247.5px;
+  background: url(~@/assets/imgs/bgArrow.jpg) no-repeat 0px 0;
+  width: 19px;
+  height: 95px;
+  line-height: 95px;
+  cursor: pointer;
+  color:rgba(255,255,255,1);
+  font-size: 18px;
+}
+.tagRightBtn3 {
+  position: absolute;
+  top: 347.5px;
+  background: url(~@/assets/imgs/bgArrow.jpg) no-repeat 0px 0;
+  width: 19px;
+  height: 95px;
+  line-height: 95px;
+  cursor: pointer;
+  color:rgba(255,255,255,1);
+  font-size: 18px;
 }
 .tagRightBtn {
   position: absolute;
