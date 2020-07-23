@@ -125,7 +125,6 @@ export default {
       evnList: ['环境空气', '地表水', '环境噪声'],
       commandType: 0,
       valueSrc: '数据展示',
-      tabType: 0,
     };
   },
   methods: {

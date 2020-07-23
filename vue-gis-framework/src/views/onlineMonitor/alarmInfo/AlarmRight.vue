@@ -10,12 +10,12 @@
       </div>
     </div>
 
-    <div class="echartItem">
+    <div class="echartItem" style="height:365px;">
       <div class="rightHead">
         <div class="titleIcon"></div>
         <div class="titleName">报警日历</div>
       </div>
-      //
+      <AirCalendar />
     </div>
 
     <div class="echartItem">
@@ -32,9 +32,12 @@
 
 <script>
 import echart from 'vue-echarts';
+import AirCalendar from '../components/AirCalendar.vue';
 
 export default {
-
+  components: {
+    AirCalendar,
+  },
   data() {
     return {
       dataIntegrityRateOption: {},
