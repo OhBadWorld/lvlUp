@@ -1,6 +1,10 @@
 <template>
   <div>
-    123
+    <div class="topTitle">监测数据一览</div>
+    <div class="rightHead">
+      <div class="titleIcon"></div>
+      <div class="titleName">日均值</div>
+    </div>
     <div style="width: 95%;height: 262px;">
      <Echart :options="lineOptionCOD" :autoResize="true" style="width:100%;height:100%"/>
   </div>
@@ -127,3 +131,37 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.topTitle{
+  height: 45px;
+  width: 100%;
+  background-color: #2D8CF0;
+  text-align: center;
+  line-height: 45px;
+  color: white;
+  font-size: 16px;
+}
+*{
+  margin: 0px;
+  padding: 0;
+}
+.rightHead{
+  margin: 10px;
+}
+.titleIcon{
+  display: inline-block;
+  width: 8px;
+  height:20px;
+  border-radius: 4px;
+  background-color: #2D8CF0;
+}
+.titleName{
+  display: inline-block;
+  color: #2D8CF0;
+  margin-left: 6px;
+  position: relative;
+  top: -4px;
+  font-size: 16px;
+}
+</style>

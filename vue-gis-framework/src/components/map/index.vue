@@ -12,6 +12,7 @@ import Vue from 'vue';
 // eslint-disable-next-line vue/no-parsing-error
 import popDataShow from '@/views/onlineMonitor/dataShow/PopData';
 import popAlarmShow from '@/views/onlineMonitor/alarmInfo/PopAlarm';
+import popGasShow from '@/views/envirQuality/envirGas/PopGas';
 
 // import shadowImg from '@/assets/imgs/marker-shadow.png';
 import airImgI from '../../assets/imgs/air/p1.png';
@@ -30,6 +31,7 @@ const gaodeMapurl = 'http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size
 
 const ExDataShowPopup = Vue.extend(popDataShow); // 【在线监测】弹框
 const ExAlarmShowPopup = Vue.extend(popAlarmShow); // 【在线监测】弹框
+const ExGasShowPopup = Vue.extend(popGasShow); // 【环境空气】弹框
 
 export default {
   components: {
@@ -140,11 +142,14 @@ export default {
 
             singleMark.addEventListener('click', () => {
               // debugger;
-              if (this.allPoints[i].portType === 'onlineData') { // 【标准空气站】弹框
+              if (this.allPoints[i].portType === 'onlineData') { // 【数据展示】弹框
                 this.drawPopup('popDataShow', this.allPoints[i]);
               }
-              if (this.allPoints[i].portType === 'alarmData') { // 【标准空气站】弹框
+              if (this.allPoints[i].portType === 'alarmData') { // 【报警信息】弹框
                 this.drawPopup('popAlarmShow', this.allPoints[i]);
+              }
+              if (this.allPoints[i].portType === 'envirGas') { // 【环境空气】弹框
+                this.drawPopup('popGasShow', this.allPoints[i]);
               }
             });
             markGroup.push(singleMark);
@@ -174,6 +179,9 @@ export default {
           break;
         case 'popAlarmShow':
           ExPopWinContent = new ExAlarmShowPopup({ propsData: { pointInfo } }).$mount();
+          break;
+        case 'popGasShow':
+          ExPopWinContent = new ExGasShowPopup({ propsData: { pointInfo } }).$mount();
           break;
         default:
           ExPopWinContent = new ExDataShowPopup({ propsData: { pointInfo } }).$mount();

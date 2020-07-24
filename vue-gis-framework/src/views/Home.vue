@@ -34,7 +34,7 @@
           <div>
             <dataLeft v-if="valueSrc==='数据展示'" @loadAllPoints="loadAllPoints" @location="location" />
             <alarmLeft v-if="valueSrc==='报警信息'" @loadAllPoints="loadAllPoints" @location="location"/>
-            <gasLeft v-if="valueSrc==='环境空气'"/>
+            <gasLeft v-if="valueSrc==='环境空气'" @loadAllPoints="loadAllPoints" @location="location"/>
             <waterLeft v-if="valueSrc==='地表水'"/>
             <noiseLeft v-if="valueSrc==='环境噪声'"/>
           </div>
