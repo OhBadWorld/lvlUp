@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       siteName: '站点选择',
-      categoryName: '',
+      categoryName: '全部',
       categoryList: [
         { id: '000', label: '全部', type: 'all' },
         { id: '001', label: '重点排污单位', type: 'zdpwdw' },
@@ -65,7 +65,7 @@ export default {
         { id: '003', label: '非重点排污单位', type: 'fzdpwdw' },
         { id: '004', label: '废气', type: 'fq' },
       ],
-      typeValue: '',
+      typeValue: '站点归属',
       typeList: [
         { id: '001', label: '行政区划', type: 'xzqh' },
         { id: '002', label: '站点归属', type: 'zdgs' },

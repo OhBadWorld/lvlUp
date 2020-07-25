@@ -3,7 +3,7 @@ import {
   Button, Select, Option, OptionGroup, Loading, Icon,
   Dropdown, DropdownMenu, DropdownItem, Input, Tree,
   Row, Col, Message, Radio, RadioGroup, Table, TableColumn,
-  Tooltip, Checkbox,
+  Tooltip, Checkbox, DatePicker,
 } from 'element-ui';
 
 export default (Vue) => {
@@ -25,6 +25,7 @@ export default (Vue) => {
   Vue.component(TableColumn.name, TableColumn);
   Vue.component(Tooltip.name, Tooltip);
   Vue.component(Checkbox.name, Checkbox);
+  Vue.component(DatePicker.name, DatePicker);
   // eslint-disable-next-line no-param-reassign
   Vue.prototype.$loading = Loading.service;
   // eslint-disable-next-line no-param-reassign

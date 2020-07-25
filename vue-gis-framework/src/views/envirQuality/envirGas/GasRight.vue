@@ -5,134 +5,166 @@
       <div class="titleIcon"></div>
       <div class="titleName">日均值</div>
     </div>
-    <div style="width: 95%;height: 262px;">
-     <Echart :options="lineOptionCOD" :autoResize="true" style="width:100%;height:100%"/>
-  </div>
+
+    <div style="margin: 0px 0px 6px 18px;">
+      <div :class="{'tab':true, 'checked': item.checked}"
+        v-for="(item) in choseList" :key="item.code"
+        @click="choseType(item)">
+        {{item.label}}
+      </div>
+      <div v-if="tabType == '小时值'" style="height:32px;">
+        <div style="margin: 8px 0px;">
+          <el-date-picker
+              style="width:292px;height:32px;"
+              v-model="dateValue"
+              popper-class="dateRangeStyle"
+              type="datetimerange"
+              value-format="yyyy-MM-dd HH:mm:00"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
+          </el-date-picker>
+          <span class="searchBtn" @click="handle_searchData"><i class="el-icon-search"></i></span>
+        </div>
+      </div>
+      <div v-if="tabType == '日数据'" style="height:32px;">
+        <div style="margin: 8px 0px;">
+          <el-date-picker
+              style="width:292px;height:32px;"
+              v-model="dateValue"
+              popper-class="dateRangeStyle"
+              type="daterange"
+              value-format="yyyy-MM-dd"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
+          </el-date-picker>
+          <span class="searchBtn" @click="handle_searchData"><i class="el-icon-search"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div style="height: calc(100vh - 482px);overflow-x: hidden;overflow-y: auto;">
+      <div>
+        <div style="margin: 10px;" class="aqiTable">
+          <el-table border height="400"
+            :row-class-name="tableRowClassName"
+            :data="tableData"
+            style="width: 100%">
+            <el-table-column prop="pointName" label="站点名称" fixed></el-table-column>
+            <el-table-column prop="tstamp" label="时间" sortable>
+              <template slot-scope="scope" >
+                <span v-if="tabType == '小时值'" >{{scope.row.tstamp.substr(11, 8)}}</span>
+                <span v-if="tabType == '日数据'" >{{scope.row.tstamp.substr(0, 10)}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="pm25" label="PM2.5" > </el-table-column>
+            <el-table-column prop="pm10" label="PM10" > </el-table-column>
+            <el-table-column prop="so2" label="SO2" > </el-table-column>
+            <el-table-column prop="co" label="CO" > </el-table-column>
+            <el-table-column prop="o3" label="O3" > </el-table-column>
+            <el-table-column prop="no2" label="NO2" > </el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import echart from 'vue-echarts';
-// 饼状图
-import 'echarts/lib/chart/pie';
-// 折线
-import 'echarts/lib/chart/line';
-// 柱状图
-import 'echarts/lib/chart/bar';
-
-// 提示
-import 'echarts/lib/component/tooltip';
-// 图例
-import 'echarts/lib/component/legend';
-// 标题
-import 'echarts/lib/component/title';
-
 export default {
-
   data() {
     return {
-      Pschart: [
+      choseList: [
+        { code: 'tab1', label: '小时值', checked: true },
+        { code: 'tab2', label: '日数据', checked: false },
+      ],
+      tabType: '小时值',
+      dateValue: [],
+      tableData: [
         {
-          key: 'string', sampleTime: '2020-01-01 00:00:00', sampleType: 'string', value: '1.0',
+          pointName: '测点名称1', tstamp: '2019-07-01 00:23:00', pm25: '0.045', pm10: '0.070', so2: '0.009', co: '2.456', o3: '0.002', no2: 0,
         },
         {
-          key: 'string', sampleTime: '2020-02-01 00:00:00', sampleType: 'string', value: '1.0',
+          pointName: '测点名称2', tstamp: '2019-07-01 00:23:00', pm25: '0.041', pm10: '0.069', so2: '0.008', co: '2.432', o3: '0.013', no2: 0,
         },
         {
-          key: 'string', sampleTime: '2020-03-01 00:00:00', sampleType: 'string', value: '1.0',
+          pointName: '测点名称3', tstamp: '2019-07-01 00:23:00', pm25: '0.040', pm10: '0.071', so2: '0.019', co: '2.442', o3: '0.012', no2: 0,
         },
         {
-          key: 'string', sampleTime: '2020-04-01 00:00:00', sampleType: 'string', value: '1.0',
+          pointName: '测点名称4', tstamp: '2019-07-01 00:23:00', pm25: '0.043', pm10: '0.060', so2: '0.012', co: '2.446', o3: '0.032', no2: 0,
         },
         {
-          key: 'string', sampleTime: '2020-05-01 00:00:00', sampleType: 'string', value: '1.0',
+          pointName: '测点名称5', tstamp: '2019-07-01 00:23:00', pm25: '0.044', pm10: '0.065', so2: '0.009', co: '2.251', o3: '0.001', no2: 0,
         },
         {
-          key: 'string', sampleTime: '2020-06-01 00:00:00', sampleType: 'string', value: '1.0',
+          pointName: '测点名称6', tstamp: '2019-07-01 00:23:00', pm25: '0.032', pm10: '0.074', so2: '0.018', co: '2.346', o3: '0.026', no2: 0,
         },
         {
-          key: 'string', sampleTime: '2020-07-01 00:00:00', sampleType: 'string', value: '1.0',
+          pointName: '测点名称7', tstamp: '2019-07-01 00:23:00', pm25: '0.014', pm10: '0.060', so2: '0.026', co: '2.254', o3: '0.055', no2: 0,
         },
         {
-          key: 'string', sampleTime: '2020-08-01 00:00:00', sampleType: 'string', value: '1.0',
+          pointName: '乐测点名称8', tstamp: '2019-07-01 00:23:00', pm25: '0.025', pm10: '0.072', so2: '0.027', co: '2.456', o3: '0.034', no2: 0,
         },
         {
-          key: 'string', sampleTime: '2020-09-01 00:00:00', sampleType: 'string', value: '1.0',
-        },
-        {
-          key: 'string', sampleTime: '2020-10-01 00:00:00', sampleType: 'string', value: '1.0',
-        },
-        {
-          key: 'string', sampleTime: '2020-11-01 00:00:00', sampleType: 'string', value: '1.0',
-        },
-        {
-          key: 'string', sampleTime: '2020-12-01 00:00:00', sampleType: 'string', value: '1.0',
+          pointName: '杨舍', tstamp: '2019-07-01 00:23:00', pm25: '0.035', pm10: '0.071', so2: '0.033', co: '2.342', o3: '0.031', no2: 0,
         },
       ],
-      lineOptionCOD: {},
     };
   },
-  methods: {
-    loadPschart() {
-      const XData = [];
-      const YData = [];
-      if (this.Pschart.length > 0) {
-        this.Pschart.forEach((_item) => {
-          XData.push(_item.sampleTime);
-          YData.push(_item.value);
-        });
-        this.lineOptionCOD = {
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross',
-              label: {
-                backgroundColor: '#6a7985',
-              },
-            },
-          },
-          grid: {
-            top: '6%',
-            left: '6%',
-            right: '6%',
-            bottom: '3%',
-            containLabel: true,
-          },
-          xAxis: {
-            type: 'category',
-            data: XData,
-          },
-          yAxis: {
-            type: 'value',
-          },
-          series: [{
-            data: YData,
-            type: 'line',
-            smooth: true,
-            itemStyle: { normal: { color: '#47a6ff' } },
-            areaStyle: {
-              normal: {
-                color: new echart.graphic.LinearGradient(0, 0, 0, 1, [{ // 这里用到了echart
-                  offset: 0,
-                  color: '#47a6ff',
-                }, {
-                  offset: 1,
-                  color: '#fff',
-                }]),
-              },
-            },
-          }],
-        };
-      }
-    },
-  },
   mounted() {
-    this.loadPschart();
+    this.handleDate();
+  },
+  methods: {
+    choseType(item) {
+      this.choseList.forEach((element) => {
+        // eslint-disable-next-line no-param-reassign
+        element.checked = false;
+      });
+      // eslint-disable-next-line no-param-reassign
+      item.checked = true;
+      this.tabType = item.label;
+      this.handleDate();
+    },
+    // 处理默认显示日期
+    handleDate() {
+      const bgDate = new Date();
+      const edDate = new Date();
+      let beginTime;
+      let endTime;
+      if (this.tabType === '小时值') {
+        bgDate.setTime(bgDate.getTime() - (3600 * 1000 * 24 * 1));
+        edDate.setTime(edDate.getTime());
+        beginTime = this.$mp.datetime(bgDate, 'yyyy-MM-dd HH:00:00');
+        endTime = this.$mp.datetime(edDate, 'yyyy-MM-dd HH:00:00');
+      } else {
+        bgDate.setTime(bgDate.getTime() - (3600 * 1000 * 24 * 6));
+        edDate.setTime(edDate.getTime());
+        beginTime = this.$mp.datetime(bgDate, 'yyyy-MM-dd');
+        endTime = this.$mp.datetime(edDate, 'yyyy-MM-dd');
+      }
+
+      // 如何获取一周？
+      this.dateValue = [beginTime, endTime];
+    },
+    handle_searchData() {
+      console.log(this.dateValue);
+    },
+    tableRowClassName({ rowIndex }) {
+      if (rowIndex % 2 !== 1) {
+        return 'single-row';
+      }
+      return 'double-row';
+    },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+*{
+  margin: 0px;
+  padding: 0;
+}
 .topTitle{
   height: 45px;
   width: 100%;
@@ -142,10 +174,7 @@ export default {
   color: white;
   font-size: 16px;
 }
-*{
-  margin: 0px;
-  padding: 0;
-}
+
 .rightHead{
   margin: 10px;
 }
@@ -156,6 +185,7 @@ export default {
   border-radius: 4px;
   background-color: #2D8CF0;
 }
+
 .titleName{
   display: inline-block;
   color: #2D8CF0;
@@ -164,4 +194,51 @@ export default {
   top: -4px;
   font-size: 16px;
 }
+.tab{
+  display: inline-block;
+  width: 76px;
+  height: 26px;
+  background-color: transparent;
+  /* border: 1px solid red; */
+  cursor: pointer;
+  text-align: center;
+  line-height: 26px;
+  background-color: #458bf3;
+  color: white;
+  border-radius: 4px;
+  margin-right: 6px;
+}
+.checked{
+  background-color: #f3b812;
+}
+// ===================================================================================================================== 设置时间框样式
+::v-deep .el-date-editor .el-range-separator{
+  line-height: 24px;;
+}
+::v-deep .el-date-editor .el-range__close-icon{
+  line-height: 24px;
+  display: none;
+}
+::v-deep .el-date-editor .el-range__icon{
+  line-height: 24px;
+  display: none;
+}
+::v-deep .el-date-editor .el-range-input{
+  width: 122px;
+}
+
+.searchBtn{
+  cursor: pointer;
+  width: 52px;
+  height: 28px;
+  display: inline-block;
+  background-color: rgb(45, 140, 240);
+  color: white;
+  text-align: center;
+  border: 1px solid #a0daff;
+  border-radius: 5px;
+  margin-left: 5px;
+  line-height: 28px;
+}
+
 </style>
