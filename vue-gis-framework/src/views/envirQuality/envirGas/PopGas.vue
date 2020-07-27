@@ -45,7 +45,27 @@
           </el-col>
         </el-row>
       </div>
-      <div v-if="tabType == 'readFactor'"></div>
+      <div v-if="tabType == 'readFactor'" style="height: calc(100vh - 682px);overflow-x: hidden;overflow-y: auto;">
+        <div>
+          <!-- :header-cell-style="{'height': '50px'}" -->
+          <div style="margin: 10px;" class="factorTable">
+            <el-table border height="200"
+              :row-class-name="tableRowClassName"
+              :data="tableData"
+              style="width: 100%">
+              <el-table-column prop="tstamp" label="时间" sortable>
+                <template slot-scope="scope" >
+                  <span>{{scope.row.tstamp.substr(11,8)}}</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="factorName" label="因子名称" > </el-table-column>
+              <el-table-column prop="factorValue" label="浓度值" > </el-table-column>
+              <el-table-column prop="area" label="浓度值范围" > </el-table-column>
+              <el-table-column prop="unit" label="单位" > </el-table-column>
+            </el-table>
+          </div>
+        </div>
+      </div>
       <div v-if="tabType == 'last24Hours'"></div>
       <div v-if="tabType == 'last30Days'"></div>
     </div>
@@ -85,6 +105,26 @@ export default {
         { code: 'last24Hours', label: '最近24小时浓度趋势', checked: false },
         { code: 'last30Days', label: '最近30天浓度趋势', checked: false },
       ],
+      tableData: [
+        {
+          factorName: 'PM2.5', tstamp: '2019-07-01 00:23:00', factorValue: '0.045', area: '0.035-0.075', unit: 'mg/m3',
+        },
+        {
+          factorName: 'SO2', tstamp: '2019-07-01 00:23:00', factorValue: '0.009', area: '0.050-0.150', unit: 'mg/m3',
+        },
+        {
+          factorName: 'NO2', tstamp: '2019-07-01 00:23:00', factorValue: '0.051', area: '0.040-0.080', unit: 'mg/m3',
+        },
+        {
+          factorName: 'O3', tstamp: '2019-07-01 00:23:00', factorValue: '0.112', area: '0.160-0.200', unit: 'mg/m3',
+        },
+        {
+          factorName: 'CO', tstamp: '2019-07-01 00:23:00', factorValue: '2.463', area: '2.000-4.000', unit: 'mg/m3',
+        },
+        {
+          factorName: 'PM10', tstamp: '2019-07-01 00:23:00', factorValue: '0.070', area: '0.050-0.150', unit: 'mg/m3',
+        },
+      ],
     };
   },
   methods: {
@@ -97,14 +137,33 @@ export default {
       item.checked = true;
       this.tabType = item.code;
     },
+    tableRowClassName({ rowIndex }) {
+      if (rowIndex % 2 !== 1) {
+        return 'single-row';
+      }
+      return 'double-row';
+    },
   },
 };
 </script>
 
+<style>
+/* table 行高设置 */
+.factorTable .el-table .el-table__header /deep/ tr, .el-table__header /deep/ th {
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+}
+.factorTable .el-table .el-table__body tr, .el-table__body td {
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+}
+</style>
 <style scoped>
 *{
   margin: 0px;
-  padding: 0;
+  padding: 0px;
 }
 .rightHead{
   margin: 10px;
