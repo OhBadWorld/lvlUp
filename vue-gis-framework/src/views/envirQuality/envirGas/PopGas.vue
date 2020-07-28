@@ -1,8 +1,9 @@
+/* eslint-disable no-plusplus */
 <template>
   <div>
     <div class="rightHead">
       <div class="titleIcon"></div>
-      <div class="titleName">实时空气情况</div>
+      <div class="titleName">{{tabName}}</div>
     </div>
     <div class="popContent">
       <div v-if="tabType == 'realGas'">
@@ -66,7 +67,18 @@
           </div>
         </div>
       </div>
-      <div v-if="tabType == 'last24Hours'"></div>
+      <div v-if="tabType == 'last24Hours'">
+        <div>
+          <div :class="{'factor':true, 'checkedFactor': item.checked}"
+            v-for="(item) in factorList" :key="item.code"
+            @click="choseFactor(item)">
+            {{item.label}}
+          </div>
+        </div>
+        <div style="width: 95%;height: 170px;">
+          <Echart :options="echartObj" :autoResize="true" style="width:100%;height:100%"/>
+        </div>
+      </div>
       <div v-if="tabType == 'last30Days'"></div>
     </div>
     <div>
@@ -80,6 +92,8 @@
 </template>
 
 <script>
+import echart from 'vue-echarts';
+
 import lvlImgI from '../../../assets/imgs/air/1.png';
 import lvlImgII from '../../../assets/imgs/air/2.png';
 import lvlImgIII from '../../../assets/imgs/air/3.png';
@@ -99,6 +113,7 @@ export default {
       lvlImgVI,
       lvlImgVII,
       tabType: 'realGas',
+      tabName: '小时空气质量情况',
       choseList: [
         { code: 'realGas', label: '小时空气质量情况', checked: true },
         { code: 'readFactor', label: '实时因子浓度', checked: false },
@@ -125,6 +140,19 @@ export default {
           factorName: 'PM10', tstamp: '2019-07-01 00:23:00', factorValue: '0.070', area: '0.050-0.150', unit: 'mg/m3',
         },
       ],
+      factorList: [
+        { code: 'SO2', label: 'SO2', checked: true },
+        { code: 'NO2', label: 'NO2', checked: false },
+        { code: 'PM10', label: 'PM10', checked: false },
+        { code: 'CO', label: 'CO', checked: false },
+        { code: 'O31', label: 'O3-1', checked: false },
+        { code: 'O38', label: 'O3-8', checked: false },
+        { code: 'PM25', label: 'PM2.5', checked: false },
+        { code: 'aqi', label: 'AQI', checked: false },
+      ],
+      echartsData: [],
+      echartObj: {},
+      curPortId: '',
     };
   },
   methods: {
@@ -136,12 +164,128 @@ export default {
       // eslint-disable-next-line no-param-reassign
       item.checked = true;
       this.tabType = item.code;
+      this.tabName = item.label;
+      if (this.tabName === '最近24小时浓度趋势') {
+        this.getEchartData(this.curPortId, this.factorList[0].code);
+      }
     },
     tableRowClassName({ rowIndex }) {
       if (rowIndex % 2 !== 1) {
         return 'single-row';
       }
       return 'double-row';
+    },
+    choseFactor(item) {
+      this.factorList.forEach((element) => {
+        // eslint-disable-next-line no-param-reassign
+        element.checked = false;
+      });
+      // eslint-disable-next-line no-param-reassign
+      item.checked = true;
+      this.getEchartData(this.curPortId, item.code);
+    },
+    // ================================================================================================================= 获取echarts 折线数据
+    getEchartData(portId, factorCode) {
+      this.echartObj = {};
+      this.echartsData = [];
+      this.$apiMethods.getLately48HoursData(portId, factorCode).then((res) => {
+        if (res.code === 200) {
+          this.echartsData = res.data[0].values;
+          const XData = [];
+          const YData = [];
+          if (this.echartsData.length > 0) {
+            this.echartsData.forEach((item) => {
+              XData.push(item.tstamp);
+              YData.push(item.value);
+            });
+            this.loadEchartData(XData, YData);
+          }
+        }
+      });
+    },
+    // ================================================================================================================= 渲染echarts 折线数据
+    loadEchartData(XData, YData) {
+      this.echartObj = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985',
+            },
+          },
+        },
+        grid: {
+          top: '15%',
+          left: '6%',
+          right: '6%',
+          bottom: '4%',
+          containLabel: true,
+        },
+        xAxis: {
+          type: 'category',
+          data: XData,
+          axisLabel: { // 坐标轴刻度标签的相关设置。
+            formatter(params) {
+              let newParamsName = '';// 最终拼接成的字符串
+              const paramsNameNumber = params.length;// 实际标签的个数
+              const provideNumber = 10;// 每行能显示的字的个数
+              const rowNumber = Math.ceil(paramsNameNumber / provideNumber);// 换行的话，需要显示几行，向上取整
+              /**
+              * 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+              */
+              // 条件等同于rowNumber>1
+              if (paramsNameNumber > provideNumber) {
+                /** 循环每一行,p表示行 */
+                // eslint-disable-next-line no-plusplus
+                for (let p = 0; p < rowNumber; p++) {
+                  let tempStr = '';// 表示每一次截取的字符串
+                  const start = p * provideNumber;// 开始截取的位置
+                  const end = start + provideNumber;// 结束截取的位置
+                  // 此处特殊处理最后一行的索引值
+                  if (p === rowNumber - 1) {
+                    // 最后一次不换行
+                    tempStr = params.substring(start, paramsNameNumber);
+                  } else {
+                    // 每一次拼接字符串并换行
+                    tempStr = `${params.substring(start, end)}\n`;
+                  }
+                  newParamsName += tempStr;// 最终拼成的字符串
+                }
+              } else {
+                // 将旧标签的值赋给新标签
+                newParamsName = params;
+              }
+              // 将最终的字符串返回
+              return newParamsName;
+            },
+
+          },
+        },
+        yAxis: {
+          type: 'value',
+          name: 'mg/m3',
+        },
+        series: [
+          {
+            data: YData,
+            type: 'line',
+            smooth: true, // true: 折线变成曲线
+            itemStyle: { normal: { color: '#47a6ff' } },
+            areaStyle: {
+              normal: {
+                color: new echart.graphic.LinearGradient(0, 0, 0, 1, [{ // 这里用到了echart
+                  offset: 0,
+                  color: '#47a6ff',
+                }, {
+                  offset: 1,
+                  color: '#fff',
+                }]),
+              },
+            },
+          },
+        ],
+      };
     },
   },
 };
@@ -260,5 +404,21 @@ export default {
   height: 60px;
   overflow-x: hidden;
   overflow-y: auto;
+}
+.factor{
+  display: inline-block;
+  width:56px;
+  height:28px;
+  background-color: #458bf3;
+  color: white;
+  /* border:1px solid red; */
+  cursor: pointer;
+  text-align: center;
+  line-height: 28px;
+  margin: 6px 6px;
+  border-radius: 7px;
+}
+.checkedFactor{
+  background-color: #f3b812;
 }
 </style>
