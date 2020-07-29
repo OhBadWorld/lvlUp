@@ -79,7 +79,18 @@
           <Echart :options="echartObj" :autoResize="true" style="width:100%;height:100%"/>
         </div>
       </div>
-      <div v-if="tabType == 'last30Days'"></div>
+      <div v-if="tabType == 'last30Days'">
+        <div>
+          <div :class="{'factor':true, 'checkedFactor': item.checked}"
+            v-for="(item) in factorList" :key="item.code"
+            @click="choseFactor(item)">
+            {{item.label}}
+          </div>
+        </div>
+        <div style="width: 95%;height: 170px;">
+          <Echart :options="echartObj" :autoResize="true" style="width:100%;height:100%"/>
+        </div>
+      </div>
     </div>
     <div>
       <div :class="{'tab':true, 'checked': item.checked}"
@@ -166,6 +177,8 @@ export default {
       this.tabType = item.code;
       this.tabName = item.label;
       if (this.tabName === '最近24小时浓度趋势') {
+        this.getEchartData(this.curPortId, this.factorList[0].code);
+      } else if (this.tabName === '最近30天浓度趋势') {
         this.getEchartData(this.curPortId, this.factorList[0].code);
       }
     },

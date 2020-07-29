@@ -26,7 +26,7 @@
       </el-dropdown>
     </div>
     <!-- =============================================================================================================== 左侧容器 -->
-    <div v-if="leftPanelShow">
+    <div v-if="leftPanelShow && valueSrc !== '环境噪声'">
       <div v-show="leftPanelTagShow" @click="openLeftPanel" class="zIndex tagLeftBtn tagLeftBtn-AlwayShow">&gt;</div>
       <transition name="leftPanel" @before-enter="leftPanelBfEnter" @after-leave="leftPanelAfLeave">
         <div v-show="leftContainerShow" class="zIndex leftPanelWrap">
@@ -35,8 +35,8 @@
             <dataLeft v-if="valueSrc==='数据展示'" @loadAllPoints="loadAllPoints" @location="location" />
             <alarmLeft v-if="valueSrc==='报警信息'" @loadAllPoints="loadAllPoints" @location="location"/>
             <gasLeft v-if="valueSrc==='环境空气'" @loadAllPoints="loadAllPoints" @location="location"/>
-            <waterLeft v-if="valueSrc==='地表水'"/>
-            <noiseLeft v-if="valueSrc==='环境噪声'"/>
+            <waterLeft v-if="valueSrc==='地表水'" @loadAllPoints="loadAllPoints" @location="location"/>
+            <!-- <noiseLeft v-if="valueSrc==='环境噪声'"/> -->
           </div>
         </div>
       </transition>
@@ -90,7 +90,7 @@ import gasRight from '@/views/envirQuality/envirGas/GasRight.vue';
 import waterLeft from '@/views/envirQuality/surfaceWater/WaterLeft.vue';
 import waterRight from '@/views/envirQuality/surfaceWater/WaterRight.vue';
 // 环境质量 --环境噪声
-import noiseLeft from '@/views/envirQuality/envirNoise/NoiseLeft.vue';
+// import noiseLeft from '@/views/envirQuality/envirNoise/NoiseLeft.vue';
 import noiseRight from '@/views/envirQuality/envirNoise/NoiseRight.vue';
 
 export default {
@@ -104,7 +104,7 @@ export default {
     gasRight,
     waterLeft,
     waterRight,
-    noiseLeft,
+    // noiseLeft,
     noiseRight,
   },
   name: 'Home',
@@ -327,7 +327,7 @@ export default {
   transition: all 0.2s;
 }
 .rightPanel-enter, .rightPanel-leave-to {
-  transform: translate3d(427px, 0, 0)
+  transform: translate3d(100%, 0, 0)
 }
 .rightPanel-leave, .rightPanel-enter-to {
   transform: translate3d(0, 0, 0)
@@ -351,7 +351,7 @@ export default {
   right: 5px;
   top: 100px;
   color: #333;
-  background: rgba(251, 250, 246, 0.63);
+  background: white;
   border-radius: 0 0 5px 0;
   height: 590px;
   width: 380px;

@@ -46,13 +46,13 @@
 
     <div style="height: calc(100vh - 482px);overflow-x: hidden;overflow-y: auto;">
       <div>
-        <div style="margin: 10px;" class="aqiTable">
-          <el-table border height="400"
+        <div style="margin: 10px;" class="dataTable">
+          <el-table border height="360"
             :row-class-name="tableRowClassName"
-            :data="tableData"
+            :data="dealTableData"
             style="width: 100%">
-            <el-table-column prop="pointName" label="站点名称" fixed></el-table-column>
-            <el-table-column prop="tstamp" label="时间" sortable>
+            <el-table-column prop="pointName" label="站点名称" width="100" fixed></el-table-column>
+            <el-table-column prop="tstamp" label="时间" width="80"  sortable>
               <template slot-scope="scope" >
                 <span v-if="tabType == '小时值'" >{{scope.row.tstamp.substr(11, 8)}}</span>
                 <span v-if="tabType == '日数据'" >{{scope.row.tstamp.substr(0, 10)}}</span>
@@ -66,6 +66,17 @@
             <el-table-column prop="no2" label="NO2" > </el-table-column>
           </el-table>
         </div>
+      </div>
+      <div>
+        <el-pagination
+          class="productParts-paging data-page"
+          layout="total,prev, pager, next,jumper"
+          :total="total"
+          :page-size="pagesize"
+          :page-sizes="pagesizes"
+          @current-change="current_change"
+          @size-change="size_change"
+        ></el-pagination>
       </div>
     </div>
   </div>
@@ -110,10 +121,16 @@ export default {
           pointName: '杨舍', tstamp: '2019-07-01 00:23:00', pm25: '0.035', pm10: '0.071', so2: '0.033', co: '2.342', o3: '0.031', no2: 0,
         },
       ],
+      total: 0, // 默认数据总数
+      pagesize: 6, // 每页的数据条数,template 中:page-size="pagesize"  表示所有的数据按每页显示的数量生个具体多少个页码按钮
+      pagesizes: [6, 12, 18, 24], // 每页要显示的数据条数
+      currentPage: 1, // 默认开始页面
+      dealTableData: [],
     };
   },
   mounted() {
     this.handleDate();
+    this.handle_getTableData();
   },
   methods: {
     choseType(item) {
@@ -126,7 +143,7 @@ export default {
       this.tabType = item.label;
       this.handleDate();
     },
-    // 处理默认显示日期
+    // ================================================================================================================= 处理默认显示日期
     handleDate() {
       const bgDate = new Date();
       const edDate = new Date();
@@ -147,14 +164,40 @@ export default {
       // 如何获取一周？
       this.dateValue = [beginTime, endTime];
     },
+    handle_getTableData() {
+      this.dealTableData = this.tableData.slice(
+        (this.currentPage - 1) * this.pagesize,
+        this.currentPage * this.pagesize,
+      );
+      this.total = this.tableData.length;
+    },
+    // ================================================================================================================= 查询数据
     handle_searchData() {
+      // 具体逻辑...
       console.log(this.dateValue);
     },
+    // ================================================================================================================= 设置单行，双行样式
     tableRowClassName({ rowIndex }) {
       if (rowIndex % 2 !== 1) {
         return 'single-row';
       }
       return 'double-row';
+    },
+    // ================================================================================================================= 翻页 改变当前页码
+    current_change(currentPage) {
+      this.dealTableData = this.tableData.slice(
+        (currentPage - 1) * this.pagesize,
+        currentPage * this.pagesize,
+      );
+      this.currentPage = currentPage;
+    },
+    // ================================================================================================================= 翻页 改变每页展示的数据
+    size_change(pagesizes) {
+      this.pagesize = pagesizes;
+      this.dealTableData = this.tableData.slice(
+        (this.currentPage - 1) * this.pagesize,
+        this.currentPage * this.pagesize,
+      );
     },
   },
 };
@@ -240,5 +283,8 @@ export default {
   margin-left: 5px;
   line-height: 28px;
 }
-
+.productParts-paging{
+  float: right;
+  margin-right: 10px;
+}
 </style>
