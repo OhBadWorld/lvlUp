@@ -62,7 +62,7 @@
             <div>
               <gasRight v-if="valueSrc==='环境空气'"/>
               <waterRight v-if="valueSrc==='地表水'"/>
-              <noiseRight v-if="valueSrc==='环境噪声'"/>
+              <noiseRight v-if="valueSrc==='环境噪声'" @loadAllPoints="loadAllPoints"/>
             </div>
         </div>
       </transition>
