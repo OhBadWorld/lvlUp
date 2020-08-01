@@ -67,8 +67,20 @@
         </div>
       </transition>
     </div>
-    <!-- =============================================================================================================== 底部容器 -->
     <!-- =============================================================================================================== 图例容器 -->
+    <div v-if="legendPanelShow" class="zIndex">
+      <!-- // -->
+      <transition name="BottomLengend" @before-enter="bottomLengendEnter" @after-leave="bottomLengendLeave">
+        <div v-show="legendContainerShow" class="zIndex legendPanelWrap">
+          <div class="bLegendMarker bLegendMarker-hide" @click="closeLegend()"><i class="el-icon-arrow-down legend-icon"></i></div>
+          <img v-if="valueSrc==='数据展示' || valueSrc==='报警信息' || valueSrc==='环境空气'" :src="gasLegend" />
+          <img v-if="valueSrc==='地表水'" :src="waterLegend" />
+          <img v-if="valueSrc==='环境噪声'" :src="noiseLegend" />
+        </div>
+      </transition>
+      <div v-show="legendPanelTagShow" @click="openLegend()" :class="{'zIndex': true,'bLegendMarker': true, 'bLegendMarker-show': true,}" ><i class="el-icon-arrow-up legend-icon2"></i></div>
+    </div>
+    <!-- =============================================================================================================== 底部容器 -->
     <!-- =============================================================================================================== 左下工具容器 -->
   </div>
 </template>
@@ -86,12 +98,15 @@ import alarmRight from '@/views/onlineMonitor/alarmInfo/AlarmRight.vue';
 // 环境质量 --环境空气
 import gasLeft from '@/views/envirQuality/envirGas/GasLeft.vue';
 import gasRight from '@/views/envirQuality/envirGas/GasRight.vue';
+import gasLegend from '@/assets/imgs/air/Legend.png';
 // 环境质量 --地表水
 import waterLeft from '@/views/envirQuality/surfaceWater/WaterLeft.vue';
 import waterRight from '@/views/envirQuality/surfaceWater/WaterRight.vue';
+import waterLegend from '@/assets/imgs/water/waterLegend.png';
 // 环境质量 --环境噪声
 // import noiseLeft from '@/views/envirQuality/envirNoise/NoiseLeft.vue';
 import noiseRight from '@/views/envirQuality/envirNoise/NoiseRight.vue';
+import noiseLegend from '@/assets/imgs/noise/noiseLegend.png';
 
 export default {
   components: {
@@ -118,9 +133,14 @@ export default {
       rightPanelShow: true, // 【右侧容器是否展示】
       rightPanelTagShow: false, // 【右侧折叠按钮是否展示】
       rightContainerShow: true, // 【右侧内容是否展示】
+      legendPanelShow: true, // 【图例容器是否展示】
+      legendPanelTagShow: false, // 【图例折叠按钮是否展示】
+      legendContainerShow: true, // 【图例内容是否展示】
       bottomPanelShow: false, // 【底部容器是否展示】
-      legendPanelShow: false, // 【图例容器是否展示】
       toolPanelShow: false, // 【工具条容器是否展示】
+      gasLegend,
+      waterLegend,
+      noiseLegend,
       onLineMonList: ['数据展示', '报警信息'],
       evnList: ['环境空气', '地表水', '环境噪声'],
       commandType: 0,
@@ -185,6 +205,21 @@ export default {
       this.rightContainerShow = false;
     },
     // ================================================================================================================= 右侧容器 end
+    // ================================================================================================================= 图例容器 start
+    bottomLengendEnter() {
+      this.legendPanelTagShow = false;
+    },
+    bottomLengendLeave() {
+      this.legendPanelTagShow = true;
+    },
+    // 展开【底部】图例
+    openLegend() {
+      this.legendContainerShow = true;
+    },
+    closeLegend() {
+      this.legendContainerShow = false;
+    },
+    // ================================================================================================================= 图例容器 end
     loadBaseMap() {
       this.$refs.baseMap.loadMap();
     },
@@ -398,5 +433,47 @@ export default {
 }
 .tagRightBtn-AlwayShow {
   right: 0px !important;
+}
+// ===================================================================================================================== 图库容器
+.BottomLengend-leave-active, .BottomLengend-enter-active {
+  transition: all 0.22s;
+}
+.BottomLengend-enter, .BottomLengend-leave-to {
+  transform: translate3d(0, 100%, 0)
+}
+.BottomLengend-leave, .BottomLengend-enter-to {
+  transform: translate3d(0, 0, 0)
+}
+.legendPanelWrap{
+  position: absolute;
+  bottom: 0px;
+  right: 390px;
+}
+.bLegendMarker{
+  background: url(~@/assets/imgs/bgArrow.jpg) no-repeat -138px -1px;
+  width: 54px;
+  height: 19px;
+  cursor: pointer;
+}
+.bLegendMarker-hide{
+  position: absolute;
+  bottom: 60px;
+  right: 0px;
+  color: white;
+  text-align: right;
+}
+.legend-icon{
+  margin-right: 9px;
+}
+.bLegendMarker-show{
+  position: absolute;
+  bottom: 0px;
+  right: 390px;
+  color: white;
+}
+.legend-icon2{
+  position: relative;
+  right: -28px;
+  top: -2px;
 }
 </style>

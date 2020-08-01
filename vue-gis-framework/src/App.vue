@@ -15,6 +15,12 @@ export default {
   margin: 0px;
   padding: 0px;
 }
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
 /* ******滚动条样式******************* */
 ::-webkit-scrollbar {
   width: 7px;
