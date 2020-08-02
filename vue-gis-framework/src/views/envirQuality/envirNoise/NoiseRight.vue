@@ -5,16 +5,33 @@
       <div class="titleIcon"></div>
       <div class="titleName">噪声信息总览</div>
     </div>
-    <el-table border :data="tableData">
-      <el-table-column prop="name" label="站点名称" width="100" fixed></el-table-column>
-      <el-table-column prop="date" label="时间" width="100" ></el-table-column>
-      <el-table-column prop="L5" label="L5" width="40" ></el-table-column>
-      <el-table-column prop="L10" label="L10" width="50" ></el-table-column>
-      <el-table-column prop="L50" label="L50" width="50" ></el-table-column>
-      <el-table-column prop="L90" label="L90" width="50" ></el-table-column>
-      <el-table-column prop="L9S" label="L9S" width="50" ></el-table-column>
-      <el-table-column prop="Leq" label="Leq" width="50" ></el-table-column>
-    </el-table>
+    <div style="height: calc(100vh - 403px);overflow-x: hidden;overflow-y: auto;">
+      <div>
+        <div style="margin: 10px;" class="dataTable">
+        <el-table border height="427" :data="tableData">
+          <el-table-column prop="name" label="站点名称" width="100" fixed></el-table-column>
+          <el-table-column prop="date" label="时间" width="100" ></el-table-column>
+          <el-table-column prop="L5" label="L5" width="40" ></el-table-column>
+          <el-table-column prop="L10" label="L10" width="50" ></el-table-column>
+          <el-table-column prop="L50" label="L50" width="50" ></el-table-column>
+          <el-table-column prop="L90" label="L90" width="50" ></el-table-column>
+          <el-table-column prop="L9S" label="L9S" width="50" ></el-table-column>
+          <el-table-column prop="Leq" label="Leq" width="50" ></el-table-column>
+        </el-table>
+        </div>
+      </div>
+      <div>
+        <el-pagination
+          class="productParts-paging data-page"
+          layout="total,prev, pager, next,jumper"
+          :total="total"
+          :page-size="pagesize"
+          :page-sizes="pagesizes"
+          @current-change="current_change"
+          @size-change="size_change"
+        ></el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -54,10 +71,16 @@ export default {
           Leq: 62,
         },
       ],
+      total: 0, // 默认数据总数
+      pagesize: 6, // 每页的数据条数,template 中:page-size="pagesize"  表示所有的数据按每页显示的数量生个具体多少个页码按钮
+      pagesizes: [6, 12, 18, 24], // 每页要显示的数据条数
+      currentPage: 1, // 默认开始页面
+      dealTableData: [],
     };
   },
   mounted() {
     this.loadPoints();
+    this.handle_getTableData();
   },
   methods: {
     loadPoints() {
@@ -69,7 +92,7 @@ export default {
           IsPoint: '1',
           X: '120.64626101',
           Y: '31.95789128',
-          airQuality: 'I',
+          status: '在线',
         },
         {
           id: '34',
@@ -78,7 +101,7 @@ export default {
           IsPoint: '1',
           X: '120.56709498',
           Y: '31.90134260',
-          airQuality: 'II',
+          status: '离线',
         },
         {
           id: '39',
@@ -87,7 +110,7 @@ export default {
           IsPoint: '1',
           X: '120.55362585',
           Y: '31.87984724',
-          airQuality: 'I',
+          status: '在线',
         },
         {
           id: '35',
@@ -96,7 +119,7 @@ export default {
           IsPoint: '1',
           X: '120.67973971',
           Y: '31.87697911',
-          airQuality: 'I',
+          status: '在线',
         },
         {
           id: '29',
@@ -105,7 +128,7 @@ export default {
           IsPoint: '1',
           X: '120.594177',
           Y: '31.767289',
-          airQuality: 'Deaflet',
+          status: 'Deaflet',
         },
         {
           id: '38',
@@ -114,7 +137,7 @@ export default {
           IsPoint: '1',
           X: '120.54830896',
           Y: '31.97094306',
-          airQuality: 'I',
+          status: '离线',
         },
         {
           id: '26',
@@ -123,7 +146,7 @@ export default {
           IsPoint: '1',
           X: '120.40354772',
           Y: '31.97611551',
-          airQuality: 'I',
+          status: '离线',
         },
         {
           id: '28',
@@ -132,14 +155,38 @@ export default {
           IsPoint: '1',
           X: '120.44927288',
           Y: '31.95719416',
-          airQuality: 'I',
+          status: '在线',
         },
       ];
       this.allPoints.forEach((item) => {
         // eslint-disable-next-line no-param-reassign
-        item.portType = 'envirGas'; // 设置点位类型，打开点位弹框的时候用
+        item.portType = 'noisePoints'; // 设置点位类型，打开点位弹框的时候用
       });
       this.$emit('loadAllPoints', this.allPoints);
+    },
+    // ================================================================================================================= 分页处理table数据
+    handle_getTableData() {
+      this.dealTableData = this.tableData.slice(
+        (this.currentPage - 1) * this.pagesize,
+        this.currentPage * this.pagesize,
+      );
+      this.total = this.tableData.length;
+    },
+    // ================================================================================================================= 翻页 改变当前页码
+    current_change(currentPage) {
+      this.dealTableData = this.tableData.slice(
+        (currentPage - 1) * this.pagesize,
+        currentPage * this.pagesize,
+      );
+      this.currentPage = currentPage;
+    },
+    // ================================================================================================================= 翻页 改变每页展示的数据
+    size_change(pagesizes) {
+      this.pagesize = pagesizes;
+      this.dealTableData = this.tableData.slice(
+        (this.currentPage - 1) * this.pagesize,
+        this.currentPage * this.pagesize,
+      );
     },
   },
 };
@@ -177,5 +224,9 @@ export default {
   position: relative;
   top: -4px;
   font-size: 16px;
+}
+.productParts-paging{
+  float: right;
+  margin-right: 10px;
 }
 </style>

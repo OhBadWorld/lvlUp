@@ -226,7 +226,7 @@ export default {
       ];
       this.allPoints.forEach((item) => {
         // eslint-disable-next-line no-param-reassign
-        item.portType = 'envirGas'; // 设置点位类型，打开点位弹框的时候用
+        item.portType = 'gasPoints'; // 设置点位类型，打开点位弹框的时候用
       });
       this.$emit('loadAllPoints', this.allPoints);
     },

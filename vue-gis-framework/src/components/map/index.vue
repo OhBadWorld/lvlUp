@@ -13,15 +13,28 @@ import Vue from 'vue';
 import popDataShow from '@/views/onlineMonitor/dataShow/PopData';
 import popAlarmShow from '@/views/onlineMonitor/alarmInfo/PopAlarm';
 import popGasShow from '@/views/envirQuality/envirGas/PopGas';
+import PopWater from '@/views/envirQuality/surfaceWater/PopWater';
 
-// import shadowImg from '@/assets/imgs/marker-shadow.png';
-import airImgI from '../../assets/imgs/air/p1.png';
-import airImgII from '../../assets/imgs/air/p2.png';
-import airImgIII from '../../assets/imgs/air/p3.png';
-import airImgIV from '../../assets/imgs/air/p4.png';
-import airImgV from '../../assets/imgs/air/p5.png';
-import airImgVI from '../../assets/imgs/air/p6.png';
-import airImgVII from '../../assets/imgs/air/p0.png';
+// 环境空气-- 点位图标
+import airIconI from '../../assets/imgs/air/p1.png';
+import airIconII from '../../assets/imgs/air/p2.png';
+import airIconIII from '../../assets/imgs/air/p3.png';
+import airIconIV from '../../assets/imgs/air/p4.png';
+import airIconV from '../../assets/imgs/air/p5.png';
+import airIconVI from '../../assets/imgs/air/p6.png';
+import airIconVII from '../../assets/imgs/air/p0.png';
+
+// 地表水-- 点位图标
+import waterIconI from '../../assets/imgs/water/一级.png';
+import waterIconII from '../../assets/imgs/water/二级.png';
+import waterIconIII from '../../assets/imgs/water/三级.png';
+import waterIconIV from '../../assets/imgs/water/四级.png';
+import waterIconV from '../../assets/imgs/water/五级.png';
+import waterIconVI from '../../assets/imgs/water/六级.png';
+
+// 噪声-- 点位图标
+import noiseIconNormal from '../../assets/imgs/noise/normal.png';
+import noiseIconOffline from '../../assets/imgs/noise/offline.png';
 
 import mapTool from './mapTools.vue';
 
@@ -32,6 +45,7 @@ const gaodeMapurl = 'http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size
 const ExDataShowPopup = Vue.extend(popDataShow); // 【在线监测】弹框
 const ExAlarmShowPopup = Vue.extend(popAlarmShow); // 【在线监测】弹框
 const ExGasShowPopup = Vue.extend(popGasShow); // 【环境空气】弹框
+const ExWaterShowPopup = Vue.extend(PopWater); // 【地表水】弹框
 
 export default {
   components: {
@@ -54,6 +68,7 @@ export default {
     };
   },
   methods: {
+    // ================================================================================================================= 图层切换
     changeMapLayer(layerType) {
       // 初次加载谷歌图层，预加载作用
       if (this.layerGoogel === undefined) {
@@ -75,8 +90,8 @@ export default {
         this.layerGaode.addTo(map);
       }
     },
-    // ================================================================================================================= 使用用户自己的图标 ----气
-    customIcon(icon) {
+    // ================================================================================================================= 使用用户自己的图标 ----气，水，声
+    customIcon(icon, moduleType = 'gas') {
       const LeafIcon = this.LMap.Icon.extend({
         options: {
           // shadowUrl: shadowImg, // 设置阴影，因为点位图标已经自带阴影了，就不使用其他阴影了
@@ -87,36 +102,82 @@ export default {
           popupAnchor: [1, -38], // 点的相对于iconAnchor弹出应该开放
         },
       });
-      const IconI = new LeafIcon({ iconUrl: airImgI });
-      const IconII = new LeafIcon({ iconUrl: airImgII });
-      const IconIII = new LeafIcon({ iconUrl: airImgIII });
-      const IconIV = new LeafIcon({ iconUrl: airImgIV });
-      const IconV = new LeafIcon({ iconUrl: airImgV });
-      const IconVI = new LeafIcon({ iconUrl: airImgVI });
-      const IconVII = new LeafIcon({ iconUrl: airImgVII });
+      const IconI = new LeafIcon({ iconUrl: airIconI });
+      const IconII = new LeafIcon({ iconUrl: airIconII });
+      const IconIII = new LeafIcon({ iconUrl: airIconIII });
+      const IconIV = new LeafIcon({ iconUrl: airIconIV });
+      const IconV = new LeafIcon({ iconUrl: airIconV });
+      const IconVI = new LeafIcon({ iconUrl: airIconVI });
+      const IconVII = new LeafIcon({ iconUrl: airIconVII });
+
+      const IconWaterI = new LeafIcon({ iconUrl: waterIconI });
+      const IconWaterII = new LeafIcon({ iconUrl: waterIconII });
+      const IconWaterIII = new LeafIcon({ iconUrl: waterIconIII });
+      const IconWaterIV = new LeafIcon({ iconUrl: waterIconIV });
+      const IconWaterV = new LeafIcon({ iconUrl: waterIconV });
+      const IconWaterVI = new LeafIcon({ iconUrl: waterIconVI });
+
+      const IconNoiseNormal = new LeafIcon({ iconUrl: noiseIconNormal });
+      const IconNoiseOffline = new LeafIcon({ iconUrl: noiseIconOffline });
 
       let currentIcon = {};
-      switch (icon) {
-        case 'I':
-          currentIcon = IconI;
-          break;
-        case 'II':
-          currentIcon = IconII;
-          break;
-        case 'III':
-          currentIcon = IconIII;
-          break;
-        case 'IV':
-          currentIcon = IconIV;
-          break;
-        case 'V':
-          currentIcon = IconV;
-          break;
-        case 'VI':
-          currentIcon = IconVI;
-          break;
-        default:
-          currentIcon = IconVII;
+      if (moduleType === 'gas') {
+        switch (icon) {
+          case 'I':
+            currentIcon = IconI;
+            break;
+          case 'II':
+            currentIcon = IconII;
+            break;
+          case 'III':
+            currentIcon = IconIII;
+            break;
+          case 'IV':
+            currentIcon = IconIV;
+            break;
+          case 'V':
+            currentIcon = IconV;
+            break;
+          case 'VI':
+            currentIcon = IconVI;
+            break;
+          default:
+            currentIcon = IconVII; // 无数据图标
+        }
+      } else if (moduleType === 'water') {
+        switch (icon) {
+          case 'I':
+            currentIcon = IconWaterI;
+            break;
+          case 'II':
+            currentIcon = IconWaterII;
+            break;
+          case 'III':
+            currentIcon = IconWaterIII;
+            break;
+          case 'IV':
+            currentIcon = IconWaterIV;
+            break;
+          case 'V':
+            currentIcon = IconWaterV;
+            break;
+          case 'VI':
+            currentIcon = IconWaterVI;
+            break;
+          default:
+            currentIcon = IconVII; // 无数据图标
+        }
+      } else if (moduleType === 'noise') {
+        switch (icon) {
+          case '在线':
+            currentIcon = IconNoiseNormal;
+            break;
+          case '离线':
+            currentIcon = IconNoiseOffline;
+            break;
+          default:
+            currentIcon = IconVII; // 无数据图标
+        }
       }
       return currentIcon;
     },
@@ -135,8 +196,18 @@ export default {
             const Y = this.allPoints[i].Y;
             // eslint-disable-next-line prefer-destructuring
             const X = this.allPoints[i].X;
-            const icon = this.allPoints[i].airQuality; // 本地自定义测试数据有该属性，接口中没有该数据
-            const currentIcon = this.customIcon(icon); // 调用自定义点位图标的方法，得到自定义的marker的icon
+            let icon; // 本地自定义测试数据有该属性，接口中没有该数据
+            let currentIcon; // 自定义点位图标
+            if (this.allPoints[i].portType === 'noisePoints') {
+              icon = this.allPoints[i].status;
+              currentIcon = this.customIcon(icon, 'noise'); // 调用自定义点位图标的方法，得到自定义的marker的icon
+            } else if (this.allPoints[i].portType === 'waterPoints') {
+              icon = this.allPoints[i].waterQuality;
+              currentIcon = this.customIcon(icon, 'water'); // 调用自定义点位图标的方法，得到自定义的marker的icon
+            } else {
+              icon = this.allPoints[i].airQuality;
+              currentIcon = this.customIcon(icon, 'gas'); // 调用自定义点位图标的方法，得到自定义的marker的icon
+            }
             // eslint-disable-next-line new-cap
             const singleMark = new this.LMap.marker([Y, X], { icon: currentIcon });
 
@@ -148,8 +219,11 @@ export default {
               if (this.allPoints[i].portType === 'alarmData') { // 【报警信息】弹框
                 this.drawPopup('popAlarmShow', this.allPoints[i]);
               }
-              if (this.allPoints[i].portType === 'envirGas') { // 【环境空气】弹框
+              if (this.allPoints[i].portType === 'gasPoints') { // 【环境空气信息】弹框
                 this.drawPopup('popGasShow', this.allPoints[i]);
+              }
+              if (this.allPoints[i].portType === 'waterPoints') { // 【地表水】弹框
+                this.drawPopup('popWaterShow', this.allPoints[i]);
               }
             });
             markGroup.push(singleMark);
@@ -182,6 +256,9 @@ export default {
           break;
         case 'popGasShow':
           ExPopWinContent = new ExGasShowPopup({ propsData: { pointInfo } }).$mount();
+          break;
+        case 'popWaterShow':
+          ExPopWinContent = new ExWaterShowPopup({ propsData: { pointInfo } }).$mount();
           break;
         default:
           ExPopWinContent = new ExDataShowPopup({ propsData: { pointInfo } }).$mount();

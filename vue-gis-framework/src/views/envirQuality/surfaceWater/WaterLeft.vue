@@ -80,31 +80,13 @@ export default {
     loadTreeData() {
       this.allPoints = [
         {
-          id: '40',
-          pId: 'AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF',
-          name: '锦丰',
-          IsPoint: '1',
-          X: '120.64626101',
-          Y: '31.95789128',
-          airQuality: 'I',
-        },
-        {
-          id: '30',
-          pId: 'AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF',
-          name: '移动监测车',
-          IsPoint: '1',
-          X: '120.56934479',
-          Y: '31.85618831',
-          airQuality: 'I',
-        },
-        {
           id: '31',
           pId: 'AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF',
           name: '监测站',
           IsPoint: '1',
           X: '120.53118860',
           Y: '31.86526444',
-          airQuality: 'I',
+          waterQuality: 'I',
         },
         {
           id: '34',
@@ -113,25 +95,7 @@ export default {
           IsPoint: '1',
           X: '120.56709498',
           Y: '31.90134260',
-          airQuality: 'II',
-        },
-        {
-          id: '39',
-          pId: 'AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF',
-          name: '城北小学',
-          IsPoint: '1',
-          X: '120.55362585',
-          Y: '31.87984724',
-          airQuality: 'I',
-        },
-        {
-          id: '35',
-          pId: 'AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF',
-          name: '南丰',
-          IsPoint: '1',
-          X: '120.67973971',
-          Y: '31.87697911',
-          airQuality: 'I',
+          waterQuality: 'II',
         },
         {
           id: '29',
@@ -140,7 +104,7 @@ export default {
           IsPoint: '1',
           X: '120.594177',
           Y: '31.767289',
-          airQuality: 'Deaflet',
+          waterQuality: 'Deaflet',
         },
         {
           id: '38',
@@ -149,7 +113,7 @@ export default {
           IsPoint: '1',
           X: '120.54830896',
           Y: '31.97094306',
-          airQuality: 'I',
+          waterQuality: 'I',
         },
         {
           id: '26',
@@ -158,25 +122,7 @@ export default {
           IsPoint: '1',
           X: '120.40354772',
           Y: '31.97611551',
-          airQuality: 'I',
-        },
-        {
-          id: '27',
-          pId: 'AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF',
-          name: '江南锅炉',
-          IsPoint: '1',
-          X: '120.50251082',
-          Y: '31.95963070',
-          airQuality: 'I',
-        },
-        {
-          id: '28',
-          pId: 'AC5E532C-B666-4B98-A4C1-BF70E8BBDCEF',
-          name: '保税区',
-          IsPoint: '1',
-          X: '120.44927288',
-          Y: '31.95719416',
-          airQuality: 'I',
+          waterQuality: 'I',
         },
         {
           id: '36',
@@ -185,7 +131,7 @@ export default {
           IsPoint: '1',
           X: '120.47244152',
           Y: '32.00095381',
-          airQuality: 'III',
+          waterQuality: 'III',
         },
         {
           id: '41',
@@ -194,7 +140,7 @@ export default {
           IsPoint: '1',
           X: '120.70108086',
           Y: '31.92602437',
-          airQuality: 'I',
+          waterQuality: 'I',
         },
         {
           id: '42',
@@ -203,7 +149,7 @@ export default {
           IsPoint: '1',
           X: '120.78479800',
           Y: '31.83174122',
-          airQuality: 'II',
+          waterQuality: 'II',
         },
         {
           id: '32',
@@ -212,7 +158,7 @@ export default {
           IsPoint: '1',
           X: '120.77730400',
           Y: '31.87554486',
-          airQuality: 'I',
+          waterQuality: 'I',
         },
         {
           id: '33',
@@ -221,12 +167,12 @@ export default {
           IsPoint: '1',
           X: '120.64110339',
           Y: '31.82378114',
-          airQuality: 'I',
+          waterQuality: 'I',
         },
       ];
       this.allPoints.forEach((item) => {
         // eslint-disable-next-line no-param-reassign
-        item.portType = 'envirGas'; // 设置点位类型，打开点位弹框的时候用
+        item.portType = 'waterPoints'; // 设置点位类型，打开点位弹框的时候用
       });
       this.$emit('loadAllPoints', this.allPoints);
     },

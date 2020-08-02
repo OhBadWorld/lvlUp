@@ -8,7 +8,7 @@
     <div class="popContent">
       <div v-if="tabType == 'realGas'">
         <div>
-          <span class="pointName">点位名称</span>
+          <span class="pointName">{{pointInfo.name}}</span>
           <span style="float: right;" class="pointName">2018-05-02 16:00:23</span>
         </div>
         <el-row :gutter="20">
@@ -114,6 +114,16 @@ import lvlImgVI from '../../../assets/imgs/air/6.png';
 import lvlImgVII from '../../../assets/imgs/air/-1.png';
 
 export default {
+  props: {
+    pointInfo: {
+      type: Object,
+      default() {
+        return {
+          name: '123',
+        };
+      },
+    },
+  },
   data() {
     return {
       lvlImgI,
